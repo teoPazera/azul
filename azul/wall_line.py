@@ -1,0 +1,2 @@
+class WallLine:
+    pass
