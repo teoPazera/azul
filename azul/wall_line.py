@@ -1,25 +1,23 @@
 from __future__ import annotations
 from typing import List, Optional
-from itertools import chain, repeat, islice
-from azul.interfaces import UsedTilesGiveInterface
 from azul.simple_types import Tile, compress_tile_list, Points
 
 class WallLine:
-    _tileTypes: List[Tile]
+    _tile_types: List[Tile]
     _tiles: List[Tile]
-    _lineUp: Optional[WallLine]
-    _lineDown: Optional[WallLine]
+    _line_up: Optional[WallLine]
+    _line_down: Optional[WallLine]
     
-    def __init__(self, tileTypes: List[Tile]) -> None:
-        self._tileTypes = tileTypes
+    def __init__(self, tile_types: List[Tile]) -> None:
+        self._tile_types = tile_types
     
-    def canPutTile(self, tile: Tile) -> bool:
+    def can_put_tile(self, tile: Tile) -> bool:
         pass
     
-    def getTiles(self) -> Optional[List[Tile]]:
+    def get_tiles(self) -> Optional[List[Tile]]:
         pass
     
-    def putTile(self, tile: Tile) -> Points:
+    def put_tile(self, tile: Tile) -> Points:
         pass
     
     def state(self) -> str:
