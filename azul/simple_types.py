@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List
+from typing import List, Optional
 
 
 class Points:
@@ -40,3 +40,6 @@ BLACK: Tile = Tile("L")
 
 def compress_tile_list(tiles: List[Tile]) -> str:
     return "".join([str(x) for x in tiles])
+
+def compress_tile_list_with_empty_spaces(tiles: List[Optional[Tile]]) -> str:
+    return "".join(["_" if x is None else str(x) for x in tiles])
