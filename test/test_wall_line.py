@@ -3,8 +3,7 @@ import unittest
 from typing import List, Optional
 from azul.interfaces import WallLineAdjacentLineInterface
 from azul.wall_line import WallLine
-from azul.simple_types import (Tile, Points, BLACK, BLUE, GREEN, RED, YELLOW, 
-                               compress_tile_list_with_empty_spaces)
+from azul.simple_types import Tile, Points, BLACK, BLUE, GREEN, RED, YELLOW
 
 
 class FakeWallLine(WallLineAdjacentLineInterface):
@@ -35,14 +34,12 @@ class FakeWallLine(WallLineAdjacentLineInterface):
         
     def put_line_down(self, line_down: Optional[WallLineAdjacentLineInterface]) -> None:
         self._line_down = line_down
-    
-    def state(self) -> str:
-        return compress_tile_list_with_empty_spaces(self._tiles)
 
 
 class TestWallLine(unittest.TestCase):
     
     def setUp(self) -> None:
+        """Creates list of fake WallLines to simulate board state"""
         self.wall_lines: List[FakeWallLine] = [FakeWallLine() for _ in range(5)]
         
         tiles: List[List[Optional[Tile]]] = [[BLUE, None, None, BLACK, None],
@@ -59,10 +56,10 @@ class TestWallLine(unittest.TestCase):
         
         
     def test_middle_wall_line(self) -> None:
-        wall_line_index = 2
-        wall_line = WallLine([BLACK, GREEN, BLUE, YELLOW, RED],
-                             self.wall_lines[wall_line_index - 1],
-                             self.wall_lines[wall_line_index + 1])
+        index: int = 2
+        wall_line = WallLine([BLACK, GREEN, BLUE, YELLOW, RED])
+        wall_line.put_line_up(self.wall_lines[index - 1])
+        wall_line.put_line_down(self.wall_lines[index + 1])
         
         tile: Tile = BLACK
         self.assertEqual(wall_line.can_put_tile(tile), True)
@@ -78,19 +75,22 @@ class TestWallLine(unittest.TestCase):
         
         tile = GREEN
         self.assertEqual(wall_line.can_put_tile(tile), False)
-        
+        self.assertCountEqual(wall_line.state(), "LG___")
+        self.assertCountEqual(wall_line.get_tiles(), [BLACK, GREEN] + [None] * 3)
         
     def test_first_wall_line(self) -> None:
-        wall_line_index = 0
-        wall_line = WallLine([BLUE, YELLOW, RED, BLACK, GREEN],
-                             None,
-                             self.wall_lines[wall_line_index + 1])
+        index: int = 0
+        wall_line = WallLine([BLUE, YELLOW, RED, BLACK, GREEN])
+        wall_line.put_line_up(None)
+        wall_line.put_line_down(self.wall_lines[index + 1])
         
         tile: Tile = BLACK
         self.assertEqual(wall_line.can_put_tile(tile), True)
         points: Points = wall_line.put_tile(tile)
         self.assertEqual(wall_line.state(), "___L_")
         self.assertEqual(str(points), "5")
+        
+        self.assertCountEqual(wall_line.state(), "L____")
         
         tile = GREEN
         self.assertEqual(wall_line.can_put_tile(tile), True)
@@ -100,12 +100,14 @@ class TestWallLine(unittest.TestCase):
         
         tile = BLACK
         self.assertEqual(wall_line.can_put_tile(tile), False)
+        self.assertCountEqual(wall_line.get_tiles(), [BLACK, GREEN] + [None] * 3)
         
     def test_last_wall_line(self) -> None:
-        wall_line_index = 4
-        wall_line = WallLine([YELLOW, RED, BLACK, GREEN, BLUE],
-                             self.wall_lines[wall_line_index - 1],
-                             None)
+        index: int = 4
+        wall_line = WallLine([YELLOW, RED, BLACK, GREEN, BLUE])
+        wall_line.put_line_up(self.wall_lines[index - 1])
+        wall_line.put_line_down(None)
+        
         
         tile: Tile = BLUE
         self.assertEqual(wall_line.can_put_tile(tile), True)
@@ -124,3 +126,11 @@ class TestWallLine(unittest.TestCase):
         points = wall_line.put_tile(tile)
         self.assertEqual(wall_line.state(), "Y__GB")
         self.assertEqual(str(points), "7")
+
+        tile = RED
+        self.assertEqual(wall_line.can_put_tile(tile), True)
+        points = wall_line.put_tile(tile)
+        tile = BLACK
+        self.assertEqual(wall_line.can_put_tile(tile), True)
+        points = wall_line.put_tile(tile)
+        self.assertCountEqual(wall_line.state(), "BGLRY")
