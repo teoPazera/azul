@@ -3,7 +3,8 @@ import unittest
 from typing import List, Optional
 from azul.interfaces import WallLineAdjacentLineInterface
 from azul.wall_line import WallLine
-from azul.simple_types import Tile, Points, BLACK, BLUE, GREEN, RED, YELLOW
+from azul.simple_types import (Tile, Points, BLACK, BLUE, GREEN, RED, YELLOW, 
+                               compress_tile_list_with_empty_spaces)
 
 
 class FakeWallLine(WallLineAdjacentLineInterface):
@@ -34,6 +35,9 @@ class FakeWallLine(WallLineAdjacentLineInterface):
         
     def put_line_down(self, line_down: Optional[WallLineAdjacentLineInterface]) -> None:
         self._line_down = line_down
+    
+    def state(self) -> str:
+        return compress_tile_list_with_empty_spaces(self._tiles)
 
 
 class TestWallLine(unittest.TestCase):
@@ -55,23 +59,25 @@ class TestWallLine(unittest.TestCase):
         
         
     def test_middle_wall_line(self) -> None:
-        wall_line_index = 3
+        wall_line_index = 2
         wall_line = WallLine([BLACK, GREEN, BLUE, YELLOW, RED],
                              self.wall_lines[wall_line_index - 1],
                              self.wall_lines[wall_line_index + 1])
         
-        tile = BLACK
+        tile: Tile = BLACK
         self.assertEqual(wall_line.can_put_tile(tile), True)
-        points: Points = wall_line.put_tile(tile)
+        points = wall_line.put_tile(tile)
+        self.assertEqual(wall_line.state(), "L____")
         self.assertEqual(str(points), "3")
+        
         tile = GREEN
         self.assertEqual(wall_line.can_put_tile(tile), True)
-        points: Points = wall_line.put_tile(tile)
+        points = wall_line.put_tile(tile)
+        self.assertEqual(wall_line.state(), "LG___")
         self.assertEqual(str(points), "5")
-        tile = RED
-        self.assertEqual(wall_line.can_put_tile(tile), True)
-        points: Points = wall_line.put_tile(tile)
-        self.assertEqual(str(points), "2")
+        
+        tile = GREEN
+        self.assertEqual(wall_line.can_put_tile(tile), False)
         
         
     def test_first_wall_line(self) -> None:
@@ -80,23 +86,41 @@ class TestWallLine(unittest.TestCase):
                              None,
                              self.wall_lines[wall_line_index + 1])
         
-        tile = BLACK
+        tile: Tile = BLACK
         self.assertEqual(wall_line.can_put_tile(tile), True)
         points: Points = wall_line.put_tile(tile)
+        self.assertEqual(wall_line.state(), "___L_")
         self.assertEqual(str(points), "5")
-    
-    
+        
+        tile = GREEN
+        self.assertEqual(wall_line.can_put_tile(tile), True)
+        points = wall_line.put_tile(tile)
+        self.assertEqual(wall_line.state(), "___LG")
+        self.assertEqual(str(points), "5")
+        
+        tile = BLACK
+        self.assertEqual(wall_line.can_put_tile(tile), False)
+        
     def test_last_wall_line(self) -> None:
         wall_line_index = 4
         wall_line = WallLine([YELLOW, RED, BLACK, GREEN, BLUE],
                              self.wall_lines[wall_line_index - 1],
                              None)
         
+        tile: Tile = BLUE
+        self.assertEqual(wall_line.can_put_tile(tile), True)
+        points: Points = wall_line.put_tile(tile)
+        self.assertEqual(wall_line.state(), "____B")
+        self.assertEqual(str(points), "1")
+        
+        tile = YELLOW
+        self.assertEqual(wall_line.can_put_tile(tile), True)
+        points = wall_line.put_tile(tile)
+        self.assertEqual(wall_line.state(), "Y___B")
+        self.assertEqual(str(points), "1")
+
         tile = GREEN
         self.assertEqual(wall_line.can_put_tile(tile), True)
-        points: Points = wall_line.put_tile(tile)
-        self.assertEqual(str(points), "5")
-        tile = BLACK
-        self.assertEqual(wall_line.can_put_tile(tile), True)
-        points: Points = wall_line.put_tile(tile)
-        self.assertEqual(str(points), "2")
+        points = wall_line.put_tile(tile)
+        self.assertEqual(wall_line.state(), "Y__GB")
+        self.assertEqual(str(points), "7")
