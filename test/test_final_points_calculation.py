@@ -1,8 +1,7 @@
 from __future__ import annotations
 import unittest
 from typing import List, Optional
-from azul.interfaces import FinalPointsCalculationInterface
-from azul.simple_types import Tile, Points
+from azul.simple_types import Tile, Points, RED, BLUE, YELLOW, GREEN, BLACK
 from azul.final_points_calculation import FinalPointsCalculation, WallPointsCalculation, HorizontalRowPointsCalculation, VerticalColumnPointsCalculation, ColorPointsCalculation
 
 
@@ -12,7 +11,7 @@ class TestFinalPointsCalculation(unittest.TestCase):
         self.horizontal = HorizontalRowPointsCalculation()
         self.vertical = VerticalColumnPointsCalculation()
         self.color = ColorPointsCalculation()
-        wall_points_calculation = WallPointsCalculation(horizontal, vertical, color)
+        wall_points_calculation = WallPointsCalculation(self.horizontal, self.vertical, self.color)
         self.final_points_calculation = FinalPointsCalculation(wall_points_calculation)
 
     def test_getPoints(self):
