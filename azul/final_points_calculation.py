@@ -15,7 +15,7 @@ class FinalPointsCalculation(FinalPointsCalculationInterface):
 
 class WallPointsCalculation(FinalPointsCalculationInterface):
     
-    def __init__(self, horizontal: HorizontalRowPoints, vertical: VerticalColumnPoints, color: ColorPoints) -> None:
+    def __init__(self, horizontal: HorizontalRowPointsCalculation, vertical: VerticalColumnPointsCalculation, color: ColorPointsCalculation) -> None:
         self._horizontal = horizontal
         self._vertical = vertical
         self._color = color
@@ -24,7 +24,7 @@ class WallPointsCalculation(FinalPointsCalculationInterface):
         return self._horizontal.getPoints(wall) + self._vertical.getPoints(wall) + self._color.getPoints(wall)
 
 
-class HorizontalRowPoints(FinalPointsCalculationInterface):
+class HorizontalRowPointsCalculation(FinalPointsCalculationInterface):
 
     def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
         for row in wall:
@@ -34,7 +34,7 @@ class HorizontalRowPoints(FinalPointsCalculationInterface):
         return 0
 
 
-class VerticalColumnPoints(FinalPointsCalculationInterface):
+class VerticalColumnPointsCalculation(FinalPointsCalculationInterface):
 
     def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
         points = 0
@@ -45,7 +45,7 @@ class VerticalColumnPoints(FinalPointsCalculationInterface):
         return points
 
 
-class ColorPoints(FinalPointsCalculationInterface):
+class ColorPointsCalculation(FinalPointsCalculationInterface):
     
     def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
         points = 0
