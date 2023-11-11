@@ -14,11 +14,11 @@ class TestFinalPointsCalculation(unittest.TestCase):
         self.color = ColorPointsCalculation()
 
         wall_points_calculation = WallPointsCalculation()
-        wall_points_calculation.addComponent(self.horizontal, self.vertical, self.color)
+        wall_points_calculation.add_component(self.horizontal, self.vertical, self.color)
         
         self.final_points_calculation = FinalPointsCalculation(wall_points_calculation)
 
-    def test_getPoints(self) -> None:
+    def test_get_points(self) -> None:
         test_wall: List[List[Optional[Tile]]] = [
             [None,  YELLOW, RED,    None,   None],
             [None,  BLUE,   YELLOW, RED,    None],
@@ -27,14 +27,14 @@ class TestFinalPointsCalculation(unittest.TestCase):
             [None,  RED,    BLACK,  GREEN,  None]
         ]
 
-        horizontal_row_points = self.horizontal.getPoints(test_wall)
+        horizontal_row_points = self.horizontal.get_points(test_wall)
         self.assertEqual(horizontal_row_points.value, 2)
 
-        vertical_column_points = self.vertical.getPoints(test_wall)
+        vertical_column_points = self.vertical.get_points(test_wall)
         self.assertEqual(vertical_column_points.value, 14)
 
-        color_points = self.color.getPoints(test_wall)
+        color_points = self.color.get_points(test_wall)
         self.assertEqual(color_points.value, 10)
 
-        points = self.final_points_calculation.getPoints(test_wall)
+        points = self.final_points_calculation.get_points(test_wall)
         self.assertEqual(points.value, 26)

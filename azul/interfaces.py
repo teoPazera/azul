@@ -9,5 +9,5 @@ class UsedTilesGiveInterface:
 
 
 class FinalPointsCalculationInterface:
-    def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
+    def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
         pass

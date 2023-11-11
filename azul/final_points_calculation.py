@@ -9,8 +9,8 @@ class FinalPointsCalculation(FinalPointsCalculationInterface):
     def __init__(self, component: FinalPointsCalculationInterface) -> None:
         self._component = component
 
-    def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
-        return Points(self._component.getPoints(wall).value)
+    def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
+        return Points(self._component.get_points(wall).value)
     
 
 class WallPointsCalculation(FinalPointsCalculationInterface):
@@ -18,17 +18,17 @@ class WallPointsCalculation(FinalPointsCalculationInterface):
     def __init__(self) -> None:
         self._components: List[FinalPointsCalculationInterface] = []
 
-    def addComponent(self, *components: FinalPointsCalculationInterface) -> None:
+    def add_component(self, *components: FinalPointsCalculationInterface) -> None:
         for component in components:
             self._components.append(component)
 
-    def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
-        return Points.sum([component.getPoints(wall) for component in self._components])
+    def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
+        return Points.sum([component.get_points(wall) for component in self._components])
 
 
 class HorizontalRowPointsCalculation(FinalPointsCalculationInterface):
 
-    def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
+    def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
         for row in wall:
             if None not in row:
                 return Points(2)
@@ -38,7 +38,7 @@ class HorizontalRowPointsCalculation(FinalPointsCalculationInterface):
 
 class VerticalColumnPointsCalculation(FinalPointsCalculationInterface):
 
-    def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
+    def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
         points = 0
         for column in range(5):
             if None not in [row[column] for row in wall]:
@@ -49,7 +49,7 @@ class VerticalColumnPointsCalculation(FinalPointsCalculationInterface):
 
 class ColorPointsCalculation(FinalPointsCalculationInterface):
     
-    def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
+    def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
         points = 0
         for i in range(5):
             if None not in [row[(i + j) % 5] for j, row in enumerate(wall)]:
