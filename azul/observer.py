@@ -3,6 +3,10 @@ from interfaces.observer_interface import ObserverInterface
 
 
 class Observer(ObserverInterface):
+    """Instances of this class get the notifications about changes in Game 
+    
+    Mediated by GameObserver publisher class
+    """
     
     _last_message: str
     
@@ -11,3 +15,6 @@ class Observer(ObserverInterface):
         
     def notify(self, new_state: str) -> None:
         self._last_message = new_state
+
+    def get_message(self) -> str:
+        return self._last_message

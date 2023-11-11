@@ -8,11 +8,13 @@ all: check test lint
 
 check_and_test: FORCE
 	mypy azul --strict
+	mypy interfaces --strict
 	mypy test --strict
 	$(PY) -m unittest 
 
 lint: FORCE
 	pylint azul/
+	pylint interfaces/
 	pylint test/
 
 format: FORCE
@@ -24,6 +26,7 @@ test: FORCE
 
 check: FORCE
 	mypy azul --strict
+	mypy interfaces --strict
 	mypy test --strict
 
 FORCE: ;

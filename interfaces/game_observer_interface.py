@@ -4,6 +4,7 @@ from azul.observer import Observer
 
 
 class GameObserverInterface(ABC):
+    """Interface for observers of the game"""
     @abstractmethod
     def register_observer(self, observer: Observer) -> None:
         pass
