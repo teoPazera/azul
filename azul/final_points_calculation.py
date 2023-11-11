@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import List, Optional
+from azul.interfaces import FinalPointsCalculationInterface
 from azul.simple_types import Tile, Points
-from azul.interface import FinalPointsCalculationInterface
 
 
 class FinalPointsCalculation(FinalPointsCalculationInterface):
