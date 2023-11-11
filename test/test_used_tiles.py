@@ -22,9 +22,9 @@ class TestUsedTiles(unittest.TestCase):
         self.assertEqual(self.used_tiles.get_tiles(), [RED, BLUE, BLACK, RED])
     
     def test_take_all(self) -> None:
-        tiles_to_give: List[Tile] = [RED, YELLOW, BLACK, STARTING_PLAYER]
+        tiles_to_give: List[Tile] = [YELLOW, GREEN, BLACK, STARTING_PLAYER]
         self.assertCountEqual(self.used_tiles.get_tiles(), [])
         self.used_tiles.give(tiles_to_give)
         tiles_to_take: List[Tile] = self.used_tiles.take_all()
-        self.assertCountEqual(tiles_to_take, [RED, YELLOW, BLACK])
+        self.assertCountEqual(tiles_to_take, [YELLOW, GREEN, BLACK])
         self.assertCountEqual(self.used_tiles.get_tiles(), [])
