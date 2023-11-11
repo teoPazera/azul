@@ -1,6 +1,6 @@
 from __future__ import annotations
-from typing import List
-from azul.simple_types import Tile
+from typing import List, Optional
+from azul.simple_types import Tile, Points
 
 
 class UsedTilesGiveInterface:

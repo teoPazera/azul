@@ -1,8 +1,9 @@
 from __future__ import annotations
 import unittest
 from typing import List, Optional
-from azul.simple_types import Tile, Points, RED, BLUE, YELLOW, GREEN, BLACK
-from azul.final_points_calculation import FinalPointsCalculation, WallPointsCalculation, HorizontalRowPointsCalculation, VerticalColumnPointsCalculation, ColorPointsCalculation
+from azul.simple_types import Tile, RED, BLUE, YELLOW, GREEN, BLACK
+from azul.final_points_calculation import FinalPointsCalculation, WallPointsCalculation, \
+    HorizontalRowPointsCalculation, VerticalColumnPointsCalculation, ColorPointsCalculation
 
 
 class TestFinalPointsCalculation(unittest.TestCase):
@@ -17,7 +18,7 @@ class TestFinalPointsCalculation(unittest.TestCase):
         
         self.final_points_calculation = FinalPointsCalculation(wall_points_calculation)
 
-    def test_getPoints(self):
+    def test_getPoints(self) -> None:
         test_wall: List[List[Optional[Tile]]] = [
             [None,  YELLOW, RED,    None,   None],
             [None,  BLUE,   YELLOW, RED,    None],

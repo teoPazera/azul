@@ -10,13 +10,13 @@ class FinalPointsCalculation(FinalPointsCalculationInterface):
         self._component = component
 
     def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
-        return self._component.getPoints(wall)
+        return Points(self._component.getPoints(wall).value)
     
 
 class WallPointsCalculation(FinalPointsCalculationInterface):
     
     def __init__(self) -> None:
-        self._components = []
+        self._components: List[FinalPointsCalculationInterface] = []
 
     def addComponent(self, *components: FinalPointsCalculationInterface) -> None:
         for component in components:
