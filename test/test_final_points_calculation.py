@@ -11,7 +11,10 @@ class TestFinalPointsCalculation(unittest.TestCase):
         self.horizontal = HorizontalRowPointsCalculation()
         self.vertical = VerticalColumnPointsCalculation()
         self.color = ColorPointsCalculation()
-        wall_points_calculation = WallPointsCalculation(self.horizontal, self.vertical, self.color)
+
+        wall_points_calculation = WallPointsCalculation()
+        wall_points_calculation.addComponent(self.horizontal, self.vertical, self.color)
+        
         self.final_points_calculation = FinalPointsCalculation(wall_points_calculation)
 
     def test_getPoints(self):

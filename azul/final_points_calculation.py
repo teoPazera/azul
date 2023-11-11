@@ -15,13 +15,15 @@ class FinalPointsCalculation(FinalPointsCalculationInterface):
 
 class WallPointsCalculation(FinalPointsCalculationInterface):
     
-    def __init__(self, horizontal: HorizontalRowPointsCalculation, vertical: VerticalColumnPointsCalculation, color: ColorPointsCalculation) -> None:
-        self._horizontal = horizontal
-        self._vertical = vertical
-        self._color = color
+    def __init__(self) -> None:
+        self._components = []
+
+    def addComponent(self, *components: FinalPointsCalculationInterface) -> None:
+        for component in components:
+            self._components.append(component)
 
     def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
-        return Points.sum([self._horizontal.getPoints(wall), self._vertical.getPoints(wall), self._color.getPoints(wall)])
+        return Points.sum([component.getPoints(wall) for component in self._components])
 
 
 class HorizontalRowPointsCalculation(FinalPointsCalculationInterface):
