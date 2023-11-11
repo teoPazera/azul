@@ -1,7 +1,7 @@
 from __future__ import annotations
+from abc import ABC, abstractmethod
 from typing import List
 from azul.simple_types import Tile
-from abc import ABC, abstractmethod
 
 
 class UsedTilesGiveInterface:
