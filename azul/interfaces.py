@@ -4,12 +4,12 @@ from abc import ABC, abstractmethod
 from azul.simple_types import Tile, Points
 
 
-class UsedTilesGiveInterface(ABC):
+class UsedTilesGiveInterface:
     def give(self, tiles: List[Tile]) -> None:
         pass
 
 
-class FinalPointsCalculationInterface:
+class FinalPointsCalculationInterface(ABC):
     
     @abstractmethod
     def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
