@@ -21,7 +21,7 @@ class WallPointsCalculation(FinalPointsCalculationInterface):
         self._color = color
 
     def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
-        return self._horizontal.getPoints(wall) + self._vertical.getPoints(wall) + self._color.getPoints(wall)
+        return Points.sum([self._horizontal.getPoints(wall), self._vertical.getPoints(wall), self._color.getPoints(wall)])
 
 
 class HorizontalRowPointsCalculation(FinalPointsCalculationInterface):
@@ -29,9 +29,9 @@ class HorizontalRowPointsCalculation(FinalPointsCalculationInterface):
     def getPoints(self, wall: List[List[Optional[Tile]]]) -> Points:
         for row in wall:
             if None not in row:
-                return 2
+                return Points(2)
 
-        return 0
+        return Points(0)
 
 
 class VerticalColumnPointsCalculation(FinalPointsCalculationInterface):
@@ -42,7 +42,7 @@ class VerticalColumnPointsCalculation(FinalPointsCalculationInterface):
             if None not in [row[column] for row in wall]:
                 points += 7
             
-        return points
+        return Points(points)
 
 
 class ColorPointsCalculation(FinalPointsCalculationInterface):
@@ -53,4 +53,4 @@ class ColorPointsCalculation(FinalPointsCalculationInterface):
             if None not in [row[(i + j) % 5] for j, row in enumerate(wall)]:
                 points += 10
 
-        return points
+        return Points(points)

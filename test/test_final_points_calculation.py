@@ -24,13 +24,13 @@ class TestFinalPointsCalculation(unittest.TestCase):
         ]
 
         horizontal_row_points = self.horizontal.getPoints(test_wall)
-        self.assertEqual(horizontal_row_points, 2)
+        self.assertEqual(horizontal_row_points.value, 2)
 
         vertical_column_points = self.vertical.getPoints(test_wall)
-        self.assertEqual(points, 14)
+        self.assertEqual(points.value, 14)
 
         color_points = self.color.getPoints(test_wall)
-        self.assertEqual(points, 10)
+        self.assertEqual(points.value, 10)
 
         points = self.final_points_calculation.getPoints(test_wall)
-        self.assertEqual(points, 26)
+        self.assertEqual(points.value, 26)
