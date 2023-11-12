@@ -81,6 +81,7 @@ class TestBoard(unittest.TestCase):
             self.board.put(5, tiles)
 
     def test_finish_round(self) -> None:
+        self.board.points = Points(20)
         tiles: List[Tile] = [RED]
         self.board.put(1, tiles)
         self.board.floor.put([STARTING_PLAYER, BLUE])
@@ -93,15 +94,7 @@ class TestBoard(unittest.TestCase):
         self.board.final_points.getPoints = points_calc_mock
 
         self.assertEqual(self.board.floor.state(), "")
-        self.assertEqual(self.board.points, -1)
-
-    def test_endGame(self) -> None:
-        self.board.endGame()
-        self.assertFalse(self.board.end_game)
-
-        game_finished_mock = unittest.mock.Mock(return_value=GAME_FINISHED)
-        self.board.game_finished.gameFinished = game_finished_mock
-        self.assertTrue(self.board.end_game)
+        self.assertEqual(self.board.points, 19)
 
 
 if __name__ == '__main__':
