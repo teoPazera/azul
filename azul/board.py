@@ -66,10 +66,13 @@ class Board:
         self.pattern_lines[destination - 1].put(tiles)
 
     def finishRound(self) -> FinishRoundResult:
-        finish_round_points: List[Points] = [p_line.finishRound() for p_line in self.pattern_lines]
-        finish_round_points.append(self.points)
-        self.points = Points.sum(finish_round_points)
+        minus_points: Points = Points.sum([p_line.finishRound() for p_line in self.pattern_lines])
+        minus_points = Points(-minus_points.value)
+
         wall_lines = [w_line.get_tiles() for w_line in self.wall_lines]
+        wall_points = self.final_points.getPoints(wall_lines)
+        self.points = Points.sum(self.points, minus_points, wall_points)
+
         finish: FinishRoundResult = self.game_finished.gameFinished(wall_lines)
         return finish
 

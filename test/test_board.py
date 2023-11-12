@@ -18,13 +18,24 @@ class FakeFinalPoints(FinalPointsCalculationInterface):
         return Points()
 
 
+class FakeUsedTiles(UsedTilesGiveInterface):
+    tiles_given: List[Tile]
+
+    def __init__(self) -> None:
+        self.tiles_given = []
+
+    def give(self, tiles: List[Tile]) -> None:
+        self.tiles_given.extend(tiles)
+
+
+
 class TestBoard(unittest.TestCase):
     board: Board
 
     def setUp(self) -> None:
         game_finished: FakeGameFinished = FakeGameFinished()
         final_points_calc: FakeFinalPoints = FakeFinalPoints()
-        used_tiles: UsedTilesGiveInterface = UsedTilesGiveInterface()
+        used_tiles: FakeUsedTiles = FakeUsedTiles()
         self.board = Board(game_finished, final_points_calc, used_tiles)
 
     def test_put_correct_tiles_in(self) -> None:
@@ -85,16 +96,18 @@ class TestBoard(unittest.TestCase):
         tiles: List[Tile] = [RED]
         self.board.put(1, tiles)
         self.board.floor.put([STARTING_PLAYER, BLUE])
-        self.board.finishRound()
-
-        self.assertEqual(self.board.pattern_lines[0].state(), "")
-        self.assertEqual(self.board.wall_lines[0].get_tiles(), [None, None, RED, None, None])
 
         points_calc_mock = unittest.mock.Mock(return_value=Points(1))
         self.board.final_points.getPoints = points_calc_mock
 
+        self.board.finishRound()
+
+        self.assertEqual(self.board.pattern_lines[0].state(), "")
+        self.assertEqual(self.board.wall_lines[0].get_tiles(), [None, None, RED, None, None])
         self.assertEqual(self.board.floor.state(), "")
         self.assertEqual(self.board.points, 19)
+
+
 
 
 if __name__ == '__main__':
