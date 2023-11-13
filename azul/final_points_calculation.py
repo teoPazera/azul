@@ -14,7 +14,7 @@ class FinalPointsCalculation(FinalPointsCalculationInterface):
             self._components.append(component)
 
     def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
-        return Points(self._component.get_points(wall).value)
+        return Points.sum([component.get_points(wall) for component in self._components])
     
 
 class WallPointsCalculation(FinalPointsCalculationInterface):
