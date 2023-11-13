@@ -1,12 +1,18 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from typing import List
-from azul.simple_types import Tile
 
+from typing import List, Optional
+from abc import ABC, abstractmethod
+from azul.simple_types import Tile, Points
 
 class UsedTilesGiveInterface:
     def give(self, tiles: List[Tile]) -> None:
         pass
+
+
+class FinalPointsCalculationInterface(ABC):
+    
+    @abstractmethod
+    def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
 
 class UsedTilesTakeAllInterface(ABC):
     @abstractmethod
