@@ -30,6 +30,17 @@ class Tile:
         return self._representation
 
 
+class FinishRoundResult:
+    """0 represents that game did not end, 1 represents that game ended"""
+    _value: int
+
+    def __init__(self, value: int):
+        self._value = value
+
+    def __str__(self) -> str:
+        return "normal" if self._value == 0 else "gameFinished"
+
+
 STARTING_PLAYER: Tile = Tile("S")
 RED: Tile = Tile("R")
 BLUE: Tile = Tile("B")
@@ -37,6 +48,8 @@ YELLOW: Tile = Tile("Y")
 GREEN: Tile = Tile("G")
 BLACK: Tile = Tile("L")
 
+NORMAL: FinishRoundResult = FinishRoundResult(0)
+GAME_FINISHED: FinishRoundResult = FinishRoundResult(1)
 
 def compress_tile_list(tiles: List[Tile]) -> str:
     return "".join([str(x) for x in tiles])
