@@ -9,21 +9,20 @@ class UsedTilesGiveInterface:
 
 
 class FinalPointsCalculationInterface:
-    def getPoints(self, wall) -> Points:
+    def get_points(self, wall) -> Points:
         pass
 
 
 class GameFinishedInterface:
 
-    def gameFinished(self, wall) -> FinishRoundResult:
+    def game_finished(self, wall) -> FinishRoundResult:
         pass
 
 
-def init_patter_line(capacity: int):
-    # here you construct pattern line object
-    pass
+class FactoryBoardInterface:
 
+    def wall_line(self, point_pattern: List[Tile]):
+        pass
 
-def init_wall_line(tile_pattern: List[Tile]):
-    # here you construct wallLine object
-    pass
+    def pattern_line(self, capacity: int):
+        pass

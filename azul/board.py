@@ -3,7 +3,7 @@ from typing import List
 from azul.simple_types import Tile, FinishRoundResult, Points, RED, BLUE, YELLOW, GREEN, BLACK, NORMAL, GAME_FINISHED,\
     STARTING_PLAYER
 from azul.interfaces import GameFinishedInterface, FinalPointsCalculationInterface, UsedTilesGiveInterface,\
-    init_patter_line, init_wall_line
+    FactoryBoardInterface
 from azul.floor import Floor
 
 
@@ -11,13 +11,13 @@ class Board:
     game_finished: GameFinishedInterface
     final_points: FinalPointsCalculationInterface
     floor: Floor
-    pattern_lines: List[init_patter_line]
-    wall_lines: List[init_wall_line]
+    pattern_lines: List[FactoryBoardInterface]
+    wall_lines: List[FactoryBoardInterface]
     end_game: bool
     points: Points
 
     def __init__(self, game_finished: GameFinishedInterface, final_points: FinalPointsCalculationInterface,
-                 used_tiles: UsedTilesGiveInterface) -> None:
+                 used_tiles: UsedTilesGiveInterface, factory: FactoryBoardInterface) -> None:
         self.game_finished = game_finished
         self.final_points = final_points
 
@@ -26,7 +26,7 @@ class Board:
                                         Points(3), Points(3)]
         self.floor = Floor(points_pattern, used_tiles)
 
-        self.pattern_lines = [init_patter_line(capacity) for capacity in range(1, 6)]
+        self.pattern_lines = [factory.pattern_line(capacity) for capacity in range(1, 6)]
 
         wall_lines_pattern: List[Tile] = [
             [BLUE, YELLOW, RED, BLACK, GREEN],
@@ -35,7 +35,7 @@ class Board:
             [RED, BLACK, GREEN, BLUE, YELLOW],
             [YELLOW, RED, BLACK, GREEN, BLUE]
         ]
-        self.wall_lines = [init_wall_line(w_pattern) for w_pattern in wall_lines_pattern]
+        self.wall_lines = [factory.wall_line(w_pattern) for w_pattern in wall_lines_pattern]
 
         for index, wall_line in enumerate(self.wall_lines):
             try:
@@ -65,18 +65,18 @@ class Board:
 
         self.pattern_lines[destination - 1].put(tiles)
 
-    def finishRound(self) -> FinishRoundResult:
+    def finish_round(self) -> FinishRoundResult:
         minus_points: Points = Points.sum([p_line.finishRound() for p_line in self.pattern_lines])
         minus_points = Points(-minus_points.value)
 
         wall_lines = [w_line.get_tiles() for w_line in self.wall_lines]
-        wall_points = self.final_points.getPoints(wall_lines)
+        wall_points = self.final_points.get_points(wall_lines)
         self.points = Points.sum(self.points, minus_points, wall_points)
 
-        finish: FinishRoundResult = self.game_finished.gameFinished(wall_lines)
+        finish: FinishRoundResult = self.game_finished.game_finished(wall_lines)
         return finish
 
-    def endGame(self) -> None:
+    def end_game(self) -> None:
         self.end_game = True
 
     def state(self) -> str:
