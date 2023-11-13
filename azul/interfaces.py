@@ -13,18 +13,19 @@ class TileSource:
     _idx: Tile #redefined idx variable
     _tiles: list[Tile]
     
-    def __init__(self, _tiles: list[Tile]) -> None:
-        pass
-
+    @abstractmethod
     def take(self, _idx: Tile) -> List[Tile]:
         pass
 
+    @abstractmethod
     def is_empty(self) -> bool:
         pass
 
+    @abstractmethod
     def state(self) -> str:
         pass
     
+    @abstractmethod
     def start_new_round(self) -> None:
         pass
 

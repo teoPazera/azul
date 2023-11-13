@@ -5,10 +5,10 @@ from azul.interfaces import TileSource
 
 
 class TableCenter(TileSource):
-    def __init__(self, _tiles: list[Tile]) -> None:
-        self._tiles = _tiles
+    def __init__(self) -> None:
+        self._tiles = []
 
-    def take(self, _idx: Tile) -> list[Tile]:
+    def take(self, _idx: Tile) -> List[Tile]:
         _tiles = [i for i in self._tiles if i == _idx]
         while _idx in self._tiles:
             self._tiles.remove(_idx)
@@ -25,6 +25,6 @@ class TableCenter(TileSource):
     def start_new_round(self) -> None:
         self._tiles.append(STARTING_PLAYER)
 
-    def add(self, _tiles: list[Tile])-> None:
+    def add(self, _tiles: List[Tile])-> None:
         self._tiles.extend(_tiles)
         
