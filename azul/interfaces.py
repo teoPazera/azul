@@ -9,7 +9,7 @@ class UsedTilesGiveInterface:
         pass
 
 
-class TileSource:
+class TileSource(ABC):
     _idx: Tile #redefined idx variable
     _tiles: list[Tile]
     
@@ -52,4 +52,3 @@ class UsedTilesTakeAllInterface(ABC):
     @abstractmethod
     def take_all(self) -> List[Tile]:
         pass
-

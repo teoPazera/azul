@@ -15,7 +15,7 @@ class TableCenter(TileSource):
         return _tiles
 
     def is_empty(self) -> bool:
-        if len(self.state) == 0:
+        if len(self.state()) == 0:
             return True
         return False
 

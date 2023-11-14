@@ -1,8 +1,6 @@
 from __future__ import annotations
 import unittest
-from typing import List
-from azul.interfaces import TileSource
-from azul.simple_types import Tile, STARTING_PLAYER, RED, GREEN, BLACK, BLUE, YELLOW
+from azul.simple_types import STARTING_PLAYER, RED, GREEN, BLACK, BLUE, YELLOW
 from azul.table_center import TableCenter
 
 
@@ -10,7 +8,7 @@ class TestTableCenter(unittest.TestCase):
     def setUp(self) -> None:
         self.table_center: TableCenter = TableCenter()
 
-    def test_tiles(self) -> None:
+    def test_tiles1(self) -> None:
         tiles = [RED, GREEN, BLUE]
         self.assertTrue(self.table_center.is_empty())
         self.table_center.add(tiles)
@@ -22,8 +20,10 @@ class TestTableCenter(unittest.TestCase):
         self.assertEqual(self.table_center.state(), "B")
         self.table_center.take(BLUE)
         self.assertTrue(self.table_center.is_empty())
+
+    def test_tiles2(self)-> None:
         self.table_center.start_new_round()
-        self.assertEqual(self.table_center.state(), STARTING_PLAYER)
+        self.assertEqual(self.table_center.state(), "S")
         self.table_center.take(STARTING_PLAYER)
         tiles = [RED, RED, BLUE]
         self.table_center.add(tiles)
