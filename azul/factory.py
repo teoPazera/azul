@@ -7,9 +7,12 @@ from azul.table_center import TableCenter
 
 class Factory(TileSource):
     def __init__(self, bag: FactoryBagInterface, table_center: TileSource) -> None:
+        self.bag = bag
+        self.table_center = table_center
         pass
 
     def take(self, idx: Tile) -> List[Tile]:
+        self._idx = idx
         return [RED]
 
     def is_empty(self) -> bool:
