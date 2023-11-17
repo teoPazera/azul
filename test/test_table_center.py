@@ -24,12 +24,11 @@ class TestTableCenter(unittest.TestCase):
     def test_tiles2(self)-> None:
         self.table_center.start_new_round()
         self.assertEqual(self.table_center.state(), "S")
-        self.table_center.take(STARTING_PLAYER)
         tiles = [RED, RED, BLUE]
         self.table_center.add(tiles)
         tiles = [GREEN, BLACK, RED]
         self.table_center.add(tiles)
-        self.assertEqual(self.table_center.take(RED), [RED,RED,RED])
+        self.assertEqual(self.table_center.take(RED), [RED, RED, RED, STARTING_PLAYER])
         self.assertEqual(self.table_center.state(), "BGL")
         self.table_center.take(BLACK)
         self.table_center.take(GREEN)
