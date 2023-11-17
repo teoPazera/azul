@@ -12,7 +12,7 @@ class TableArea():
         table_center: TileSource = TableCenter()
         self._tile_sources = []
         self._tile_sources.append(table_center)
-        for i in range(num_of_factories):
+        for _ in range(num_of_factories):
             self._tile_sources.append(Factory(bag, table_center))
 
     def take(self, source_idx:int, idx: Tile) -> List[Tile]:
