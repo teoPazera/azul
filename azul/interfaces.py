@@ -52,3 +52,8 @@ class UsedTilesTakeAllInterface(ABC):
     @abstractmethod
     def take_all(self) -> List[Tile]:
         pass
+
+class FactoryBagInterface(ABC):
+    @abstractmethod
+    def take(self, count: int) -> List[Tile]:
+        pass
