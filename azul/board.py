@@ -1,7 +1,8 @@
 from __future__ import annotations
 from typing import List, Optional
 from azul.simple_types import Tile, FinishRoundResult, Points, RED, BLUE, YELLOW, GREEN, BLACK
-from azul.interfaces import GameFinishedInterface, FinalPointsCalculationInterface, UsedTilesGiveInterface
+from azul.interfaces import (GameFinishedInterface, FinalPointsCalculationInterface, 
+                             UsedTilesGiveInterface)
 from azul.floor import Floor
 from azul.wall_line import WallLine
 from azul.pattern_line import PatternLine
@@ -15,7 +16,8 @@ class Board:
     _wall_lines: List[WallLine]
     _points: Points
 
-    def __init__(self, game_finished: GameFinishedInterface, final_points: FinalPointsCalculationInterface,
+    def __init__(self, game_finished: GameFinishedInterface, 
+                 final_points: FinalPointsCalculationInterface,
                  used_tiles: UsedTilesGiveInterface) -> None:
         # reference to game_finished and final_points
         self._game_finished = game_finished
@@ -111,7 +113,3 @@ class Board:
         final += f"Wall Lines:\n{wall_lines_state}\n"
         final += "-------------------\n"
         return final
-
-
-
-
