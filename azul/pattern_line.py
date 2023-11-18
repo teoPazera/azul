@@ -5,10 +5,13 @@ from azul.simple_types import Tile, Points
 
 class PatternLine:
 
+    _tiles: List[Tile]
+
     def __init__(self, capacity: int) -> None:
-        pass
+        self._tiles = []
 
     def put(self, tiles: List[Tile]) -> List[Tile]:
+        self._tiles.extend(tiles)
         return [Tile("None")]
 
     def finish_round(self) -> Points:
@@ -16,8 +19,3 @@ class PatternLine:
 
     def state(self) -> str:
         return ""
-
-
-
-
-
