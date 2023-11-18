@@ -71,3 +71,4 @@ class FactoryBagInterface(ABC):
 class TestFactoryBag(FactoryBagInterface):
     def take(self, count: int) -> List[Tile]:
         return [RED]
+    

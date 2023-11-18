@@ -1,6 +1,6 @@
 from __future__ import annotations
 import unittest
-from azul.simple_types import STARTING_PLAYER, RED, GREEN, BLACK, BLUE, YELLOW
+from azul.simple_types import  RED, GREEN, BLUE, YELLOW
 from azul.factory import Factory
 from azul.table_center import TableCenter
 from azul.interfaces import FactoryBagInterface,TestFactoryBag

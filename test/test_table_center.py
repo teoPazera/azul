@@ -8,7 +8,7 @@ class TestTableCenter(unittest.TestCase):
     def setUp(self) -> None:
         self.table_center: TableCenter = TableCenter()
 
-    def test_tableCenter1(self) -> None:
+    def test_table_center1(self) -> None:
         tiles = [RED, GREEN, BLUE]
         self.assertTrue(self.table_center.is_empty())
         self.table_center.add(tiles)
@@ -21,7 +21,7 @@ class TestTableCenter(unittest.TestCase):
         self.table_center.take(BLUE)
         self.assertTrue(self.table_center.is_empty())
 
-    def test_tableCenter2(self)-> None:
+    def test_table_center2(self)-> None:
         self.table_center.start_new_round()
         self.assertEqual(self.table_center.state(), "S")
         tiles = [RED, RED, BLUE]

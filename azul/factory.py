@@ -27,7 +27,7 @@ class Factory(TileSource):
         return compress_tile_list(self._tiles)    
     
     def start_new_round(self, _tiles: list[Tile] = []) -> None:
-        #ability to add tiles for testing purposes
+        #ability to add tiles for testing purposes fix later to just use bag
         if _tiles == []:
             self._tiles.extend(self.bag.take(4))
         else:
