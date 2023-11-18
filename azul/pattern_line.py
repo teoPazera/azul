@@ -6,9 +6,11 @@ from azul.simple_types import Tile, Points
 class PatternLine:
 
     _tiles: List[Tile]
+    _capacity: int
 
     def __init__(self, capacity: int) -> None:
         self._tiles = []
+        self._capacity = capacity
 
     def put(self, tiles: List[Tile]) -> List[Tile]:
         self._tiles.extend(tiles)
