@@ -9,7 +9,7 @@ class TableArea():
     _tile_sources: List[TileSource]
 
     def __init__(self, num_of_factories: int, bag: FactoryBagInterface) -> None:
-        table_center: TileSource = TableCenter()
+        table_center: TableCenter = TableCenter()
         self._tile_sources = []
         self._tile_sources.append(table_center)
         for _ in range(num_of_factories):
