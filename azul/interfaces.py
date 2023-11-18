@@ -2,12 +2,19 @@ from __future__ import annotations
 
 from typing import List, Optional
 from abc import ABC, abstractmethod
-from azul.simple_types import Tile, Points
+from azul.simple_types import Tile, Points, FinishRoundResult
+
 
 class UsedTilesGiveInterface:
     def give(self, tiles: List[Tile]) -> None:
         pass
 
+
+
+class GameFinishedInterface(ABC):
+    @abstractmethod
+    def game_finished(self, wall: List[List[Optional[Tile]]]) -> FinishRoundResult:
+        pass
 
 class TileSource(ABC):
     _idx: Tile #redefined idx variable
@@ -29,6 +36,7 @@ class TileSource(ABC):
     def start_new_round(self) -> None:
         pass
 
+
 class WallLineAdjacentLineInterface(ABC):
     @abstractmethod
     def get_tile_in_column(self, column: int) -> Optional[Tile]:
@@ -41,12 +49,14 @@ class WallLineAdjacentLineInterface(ABC):
     @abstractmethod
     def get_line_down(self) -> Optional[WallLineAdjacentLineInterface]:
         pass
-      
+
+
 class FinalPointsCalculationInterface(ABC):
     
     @abstractmethod
     def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
         pass
+
 
 class UsedTilesTakeAllInterface(ABC):
     @abstractmethod
