@@ -9,18 +9,9 @@ class UsedTilesGiveInterface:
         pass
 
 
-class GameFinishedInterface:
-
-    def game_finished(self, wall) -> FinishRoundResult:
-        pass
-
-
-class FactoryBoardInterface:
-
-    def wall_line(self, point_pattern: List[Tile]):
-        pass
-
-    def pattern_line(self, capacity: int):
+class GameFinishedInterface(ABC):
+    @abstractmethod
+    def game_finished(self, wall: List[List[Optional[Tile]]]) -> FinishRoundResult:
         pass
 
 
