@@ -6,11 +6,15 @@ from azul.simple_types import Tile, Points
 
 class FinalPointsCalculation(FinalPointsCalculationInterface):
 
-    def __init__(self, component: FinalPointsCalculationInterface) -> None:
-        self._component = component
+    def __init__(self) -> None:
+        self._components: List[FinalPointsCalculationInterface] = []
+
+    def add_component(self, *components: FinalPointsCalculationInterface) -> None:
+        for component in components:
+            self._components.append(component)
 
     def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
-        return Points(self._component.get_points(wall).value)
+        return Points.sum([component.get_points(wall) for component in self._components])
     
 
 class WallPointsCalculation(FinalPointsCalculationInterface):

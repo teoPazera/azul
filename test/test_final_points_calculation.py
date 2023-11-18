@@ -16,7 +16,8 @@ class TestFinalPointsCalculation(unittest.TestCase):
         wall_points_calculation = WallPointsCalculation()
         wall_points_calculation.add_component(self.horizontal, self.vertical, self.color)
         
-        self.final_points_calculation = FinalPointsCalculation(wall_points_calculation)
+        self.final_points_calculation = FinalPointsCalculation()
+        self.final_points_calculation.add_component(wall_points_calculation)
 
     def test_get_points(self) -> None:
         test_wall: List[List[Optional[Tile]]] = [
