@@ -16,7 +16,11 @@ class Bag:
         self._tiles = []
         self._tiles.extend([RED, BLUE, YELLOW, GREEN, BLACK] * (self._MAX_TILES // 5))
 
-        random.shuffle()
+        random.shuffle(self._tiles)
+
+    @property
+    def tiles(self) -> List[Tile]:
+        return self._tiles
 
     def take(self, count: int) -> List[Tile]:
         """Returns count number of tiles,
