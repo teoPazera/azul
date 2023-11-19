@@ -24,6 +24,10 @@ class PatternLine:
         # corresponding wall line
         self._wall_line = wall_line
 
+    @property
+    def tiles(self) -> List[Tile]:
+        return self._tiles
+
     def put(self, tiles: List[Tile]) -> List[Tile]:
         """Puts tiles to pattern line,
         S and everything else falls to floor
@@ -42,12 +46,11 @@ class PatternLine:
         return self._tiles
 
     def finish_round(self) -> Points:
-        """Puts to wall_line from p_line, throws to used_tiles
+        """Puts to wall_line from p_line, rest throws to used_tiles
         :return: points if tile putted to wall_line"""
         points: Points = Points(0)
         if len(self._tiles) == self._capacity and self._wall_line.can_put_tile(self._tiles[0]):
-            self._wall_line.put_tile(self._tiles.pop())
-            points = Points(1)
+            points = self._wall_line.put_tile(self._tiles.pop())
 
         self._used_tiles.give(self._tiles)
         self._tiles = []

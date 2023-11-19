@@ -1,9 +1,9 @@
 from __future__ import annotations
 from typing import List, Optional
 from azul.simple_types import Tile, Points, compress_tile_list_with_empty_spaces
-from azul.interfaces import WallLineAdjacentLineInterface
+from azul.interfaces import WallLineAdjacentLineInterface, WallLineInterface
 
-class WallLine(WallLineAdjacentLineInterface):
+class WallLine(WallLineAdjacentLineInterface, WallLineInterface):
     _tile_types: List[Tile]
     _tiles: List[Optional[Tile]]
     _line_up: Optional[WallLineAdjacentLineInterface]

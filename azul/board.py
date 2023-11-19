@@ -29,9 +29,6 @@ class Board:
                                         Points(3), Points(3)]
         self._floor = Floor(points_pattern, used_tiles)
 
-        # create all pattern_lines
-        self._pattern_lines = [PatternLine(capacity) for capacity in range(1, 6)]
-
         # create all wall lines
         wall_lines_pattern: List[List[Tile]] = [
             [BLUE, YELLOW, RED, BLACK, GREEN],
@@ -52,6 +49,11 @@ class Board:
                 wall_line.put_line_down(self._wall_lines[index + 1])
             except IndexError:
                 pass
+
+        # create all pattern_lines
+        self._pattern_lines = [PatternLine(capacity, used_tiles, self._floor, self._wall_lines[capacity - 1])
+                               for capacity in range(1, 6)]
+
         # set board points
         self._points = Points(0)
 

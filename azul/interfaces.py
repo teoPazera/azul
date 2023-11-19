@@ -74,10 +74,6 @@ class FloorInterface(ABC):
     def put(self, tiles: List[Tile]) -> None:
         pass
 
-    @abstractmethod
-    def finish_round(self) -> Points:
-        pass
-
 
 class WallLineInterface(ABC):
 
