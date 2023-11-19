@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 from abc import ABC, abstractmethod
-from azul.simple_types import Tile, Points, FinishRoundResult, RED
+from azul.simple_types import Tile, Points, FinishRoundResult, RED, GREEN, BLACK
 
 
 class UsedTilesGiveInterface:
@@ -72,3 +72,6 @@ class TestFactoryBag(FactoryBagInterface):
     def take(self, count: int) -> List[Tile]:
         return [RED]
     
+class TestUsedTilesTakeAllInterface(UsedTilesTakeAllInterface):
+    def take_all(self) -> List[Tile]:
+        return [RED * 10]+[BLACK * 12]+[GREEN * 11]
