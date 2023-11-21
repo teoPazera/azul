@@ -31,4 +31,3 @@ class TableCenter(TileSource):
 
     def add(self, _tiles: List[Tile])-> None:
         self._tiles.extend(_tiles)
-        

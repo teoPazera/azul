@@ -1,9 +1,8 @@
 from __future__ import annotations
 from typing import List, Dict
+import unittest
 from azul.simple_types import Tile, RED, BLUE, YELLOW, GREEN, BLACK
 from azul.bag import Bag
-from azul.interfaces import UsedTilesTakeAllInterface
-import unittest
 
 
 class TestBag(unittest.TestCase):
@@ -25,8 +24,8 @@ class TestBag(unittest.TestCase):
         """Test if all tiles are present"""
         counts: Dict[str, int] = self.count()
 
-        for color_count in counts:
-            self.assertEqual(20, counts[color_count])
+        for color_count in counts.values():
+            self.assertEqual(20, color_count)
         self.assertEqual(100, sum(counts.values()))
 
     def test_take(self) -> None:
@@ -47,7 +46,7 @@ class TestBag(unittest.TestCase):
         """Case when bag should extend from used_tiles"""
         self.bag.take(80)
 
-        self.bag._used_tiles.give([BLACK, RED, BLUE, YELLOW, RED])
+        self.bag.used_tiles.give([BLACK, RED, BLUE, YELLOW, RED])
 
         taken: List[Tile] = self.bag.take(25)
         self.assertIn(BLACK, taken)

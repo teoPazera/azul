@@ -1,9 +1,9 @@
 from __future__ import annotations
 from typing import List, Optional
+import unittest
 from azul.simple_types import Tile, Points, BLUE, YELLOW, RED, BLACK, GREEN, STARTING_PLAYER
 from azul.pattern_line import PatternLine
 from azul.interfaces import UsedTilesGiveInterface, FloorInterface, WallLineInterface
-import unittest
 
 
 class FakeUsedTiles(UsedTilesGiveInterface):
