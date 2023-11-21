@@ -49,8 +49,9 @@ class Board:
                 pass
 
         # create all pattern_lines
-        self._pattern_lines = [PatternLine(capacity, self._floor, used_tiles, self._wall_lines[capacity - 1])
-                               for capacity in range(1, 6)]
+        for capacity in range(1, 6):
+            p_line = PatternLine(capacity, used_tiles, self._floor, self._wall_lines[capacity - 1])
+            self._pattern_lines.append(p_line)
 
         # set board points
         self._points = Points(0)
