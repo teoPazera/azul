@@ -83,4 +83,4 @@ class RngInterface(ABC):
 
 class TestRngInterface(RngInterface):
     def permutation (self, count: int, length:int) -> List[int]:
-        return [i for i in range(count)]
+        return list(range(count))

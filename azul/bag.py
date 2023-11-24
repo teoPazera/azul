@@ -21,12 +21,12 @@ class Bag:
             self._tiles.extend(self.used_tiles.take_all())
 
         _tiles = []
-        _take = self.rng.permutation(4, len(self._tiles))
+        _take = self.rng.permutation(count, len(self._tiles))
         for i in _take: 
             _tiles.append(self._tiles[i])
         #choose tiles from bag
-        for i in _tiles:
-            self._tiles.remove(_tiles[i])
+        for tile in _tiles:
+            self._tiles.remove(tile)
         #remove the tiles i choose from the bag
         return _tiles
 
