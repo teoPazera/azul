@@ -22,9 +22,12 @@ class Bag:
 
         _tiles = []
         _take = self.rng.permutation(4, len(self._tiles))
-        for i in _take:
-            _tiles.append(self._tiles.pop(i))
-        
+        for i in _take: 
+            _tiles.append(self._tiles[i])
+        #choose tiles from bag
+        for i in _tiles:
+            self._tiles.remove(_tiles[i])
+        #remove the tiles i choose from the bag
         return _tiles
 
     def state(self) -> str:
