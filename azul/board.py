@@ -40,10 +40,8 @@ class Board:
         self._wall_lines = [WallLine(w_pattern) for w_pattern in wall_lines_pattern]
         # set line up, line down
         for index, wall_line in enumerate(self._wall_lines):
-            try:
+            if index > 0:
                 wall_line.put_line_up(self._wall_lines[index - 1])
-            except IndexError:
-                pass
 
             try:
                 wall_line.put_line_down(self._wall_lines[index + 1])

@@ -33,11 +33,12 @@ class WallPointsCalculation(FinalPointsCalculationInterface):
 class HorizontalRowPointsCalculation(FinalPointsCalculationInterface):
 
     def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
+        points = 0
         for row in wall:
             if None not in row:
-                return Points(2)
+                points += 2
 
-        return Points(0)
+        return Points(points)
 
 
 class VerticalColumnPointsCalculation(FinalPointsCalculationInterface):
