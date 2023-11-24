@@ -68,7 +68,30 @@ class FactoryBagInterface(ABC):
     def take(self, count: int) -> List[Tile]:
         pass
 
+
 class TestFactoryBag(FactoryBagInterface):
     def take(self, count: int) -> List[Tile]:
         return [RED]
     
+
+class FloorInterface(ABC):
+
+    @abstractmethod
+    def put(self, tiles: List[Tile]) -> None:
+        pass
+
+
+class WallLineInterface(ABC):
+
+    @abstractmethod
+    def can_put_tile(self, tile: Tile) -> bool:
+        pass
+
+    @abstractmethod
+    def get_tiles(self) -> List[Optional[Tile]]:
+        pass
+
+    @abstractmethod
+    def put_tile(self, tile: Tile) -> Points:
+        pass
+

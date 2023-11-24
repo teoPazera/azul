@@ -1,11 +1,11 @@
 from __future__ import annotations
 from typing import List
 from itertools import chain, repeat, islice
-from azul.interfaces import UsedTilesGiveInterface
+from azul.interfaces import UsedTilesGiveInterface, FloorInterface
 from azul.simple_types import Tile, compress_tile_list, Points
 
 
-class Floor:
+class Floor(FloorInterface):
     _point_pattern: List[Points]
     _used_tiles: UsedTilesGiveInterface
     _tiles: List[Tile]
