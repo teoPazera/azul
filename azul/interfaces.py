@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 from abc import ABC, abstractmethod
-from azul.simple_types import Tile, Points, FinishRoundResult, RED
+from azul.simple_types import Tile, Points, FinishRoundResult, RED, GREEN, BLACK
 
 
 class UsedTilesGiveInterface:
@@ -57,7 +57,6 @@ class FinalPointsCalculationInterface(ABC):
     def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
         pass
 
-
 class UsedTilesTakeAllInterface(ABC):
     @abstractmethod
     def take_all(self) -> List[Tile]:
@@ -68,11 +67,9 @@ class FactoryBagInterface(ABC):
     def take(self, count: int) -> List[Tile]:
         pass
 
-
 class TestFactoryBag(FactoryBagInterface):
     def take(self, count: int) -> List[Tile]:
         return [RED]
-    
 
 class FloorInterface(ABC):
 
@@ -95,3 +92,15 @@ class WallLineInterface(ABC):
     def put_tile(self, tile: Tile) -> Points:
         pass
 
+class TestUsedTilesTakeAllInterface(UsedTilesTakeAllInterface):
+    def take_all(self) -> List[Tile]:
+        return [RED] * 10 + [BLACK] * 12 + [GREEN] * 11
+
+class RngInterface(ABC):
+    @abstractmethod
+    def permutation (self, count: int, length:int) -> List[int]:
+        pass
+
+class TestRngInterface(RngInterface):
+    def permutation (self, count: int, length:int) -> List[int]:
+        return list(range(count))
