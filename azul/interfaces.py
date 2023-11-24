@@ -75,3 +75,12 @@ class TestFactoryBag(FactoryBagInterface):
 class TestUsedTilesTakeAllInterface(UsedTilesTakeAllInterface):
     def take_all(self) -> List[Tile]:
         return [RED * 10]+[BLACK * 12]+[GREEN * 11]
+
+class RngInterface(ABC):
+    @abstractmethod
+    def permutation (self, count: int, length:int) -> List[int]:
+        pass
+
+class TestRngInterface(RngInterface):
+    def permutation (self, count: int, length:int) -> List[int]:
+        return [i for i in range(count)]
