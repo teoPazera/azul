@@ -68,7 +68,6 @@ class FactoryBagInterface(ABC):
     def take(self, count: int) -> List[Tile]:
         pass
 
-
 class FloorInterface(ABC):
 
     @abstractmethod

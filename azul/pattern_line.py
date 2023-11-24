@@ -8,7 +8,7 @@ class PatternLine:
 
     _tiles: List[Tile]
     _capacity: int
-    used_tiles: UsedTilesGiveInterface
+    _used_tiles: UsedTilesGiveInterface
     _floor: FloorInterface
     _wall_line: WallLineInterface
 
@@ -16,7 +16,7 @@ class PatternLine:
                  floor: FloorInterface, wall_line: WallLineInterface) -> None:
         self._tiles = []
         self._capacity = capacity
-        self.used_tiles = used_tiles
+        self._used_tiles = used_tiles
         self._floor = floor
         self._wall_line = wall_line
 
