@@ -2,7 +2,8 @@ from __future__ import annotations
 import unittest
 from typing import List
 from azul.simple_types import Tile, RED, GREEN, BLACK, BLUE, YELLOW, compress_tile_list
-from azul.interfaces import TestUsedTilesTakeAllInterface, UsedTilesTakeAllInterface, TestRngInterface, RngInterface
+from azul.interfaces import TestUsedTilesTakeAllInterface, UsedTilesTakeAllInterface
+from azul.interfaces import TestRngInterface, RngInterface
 from azul.bag import Bag
 
 class TestBag(unittest.TestCase):
@@ -27,20 +28,19 @@ class TestBag(unittest.TestCase):
 
     def test_bag2(self) -> None:
         _tiles = []
-        for i in range(25):
+        for _ in range(25):
             _tiles.extend(self.bag.take(4))
         self.assertEqual(len(_tiles), 100)
         self.assertEqual(self.bag.state(), "")
         #emptied bag will draw more tiles from usedtiles
         _tiles = self.bag.take(4)
         self.assertEqual(_tiles, [RED]*4)
-        self.assertEqual(self.bag.state(),compress_tile_list([RED] * 6 + [BLACK] * 12 + [GREEN] * 11))
+        self.assertEqual(self.bag.state(),compress_tile_list([RED] * 6 + [BLACK] * 12 
+                                                             + [GREEN] * 11))
 
     def test_bag3(self) -> None:
         _tiles = []
-        for i in range(5):
+        for _ in range(5):
             _tiles.extend(self.bag.take(4))
         self.assertEqual(len(_tiles),20)
         self.assertEqual('RGLBY'*4, compress_tile_list(_tiles))
-        
-
