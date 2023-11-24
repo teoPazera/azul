@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import List
-from azul.simple_types import Tile, Points, STARTING_PLAYER, compress_tile_list
+from azul.simple_types import Tile, Points
 from azul.interfaces import UsedTilesGiveInterface, FloorInterface, WallLineInterface
 
 
