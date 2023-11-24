@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import List
-from azul.simple_types import Tile, Points
+from azul.simple_types import Tile, Points, compress_tile_list_with_empty_spaces
 
 
 class PatternLine:
@@ -20,4 +20,4 @@ class PatternLine:
         return Points(0)
 
     def state(self) -> str:
-        return ""
+        return compress_tile_list_with_empty_spaces(self._tiles)
