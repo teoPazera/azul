@@ -1,34 +1,40 @@
 from __future__ import annotations
 import unittest
-from azul.simple_types import  RED, GREEN, BLUE, YELLOW
+from azul.simple_types import  RED, BLACK
 from azul.factory import Factory
 from azul.table_center import TableCenter
-from azul.interfaces import FactoryBagInterface,TestFactoryBag
+from azul.bag import Bag
+from azul.interfaces import TestRngInterface, TestUsedTilesTakeAllInterface
 
 class TestTableCenter(unittest.TestCase):
     def setUp(self) -> None:
         self.table_center: TableCenter = TableCenter()
-        bag: FactoryBagInterface = TestFactoryBag()
-        self.factory: Factory = Factory(bag, self.table_center)
+        self.bag: Bag = Bag(TestUsedTilesTakeAllInterface(), TestRngInterface())
+        self.factory: Factory = Factory(self.bag, self.table_center)
 
     def test_factory1(self) -> None:
-        tiles = [RED, GREEN, BLUE, BLUE]
         self.assertTrue(self.factory.is_empty())
-        self.factory.start_new_round(tiles)
+        self.factory.start_new_round()
         self.assertFalse(self.factory.is_empty())
-        self.assertEqual(self.factory.state(), "RGBB")
+        self.assertEqual(self.factory.state(), "RGLB")
         self.assertEqual([RED], self.factory.take(RED))
         self.assertTrue(self.factory.is_empty)
-        self.assertEqual(self.table_center.state(), "GBB")
+        self.assertEqual(self.table_center.state(), "GLB")
         
     def test_factory2(self)-> None:
-        tiles = [RED, RED, BLUE, YELLOW]
-        self.factory.start_new_round(tiles)
-        self.assertFalse(self.factory.is_empty())
-        self.assertEqual(self.factory.take(RED), [RED, RED])
-        self.assertEqual(self.table_center.state(), "BY")
+        #testing multiple tiles of same color
+        for _ in range(26):
+            self.factory.start_new_round()
+        self.assertEqual(self.factory.state(), "RRRR")
+        self.assertEqual(self.factory.take(RED), [RED, RED, RED, RED])
+        self.assertTrue(self.table_center.is_empty())
         self.assertTrue(self.factory.is_empty())
-
+        self.factory.start_new_round()
+        self.assertEqual("RRRR", self.factory.state())
+        self.factory.start_new_round()
+        self.assertEqual(self.factory.state(), "RRLL")
+        self.assertEqual(self.factory.take((BLACK)), [BLACK,BLACK])
+        self.assertEqual(self.table_center.state(), "RR")
 
 if __name__ == '__main__':
     unittest.main()
