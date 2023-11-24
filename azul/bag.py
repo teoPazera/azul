@@ -18,7 +18,7 @@ class Bag:
         
     def take(self, count: int) -> List[Tile]:
         if count > len(self._tiles):
-            self.tiles.extend(self.used_tiles.take_all())
+            self._tiles.extend(self.used_tiles.take_all())
 
         _tiles = []
         _take = self.rng.permutation(4, len(self._tiles))

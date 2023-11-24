@@ -74,7 +74,7 @@ class TestFactoryBag(FactoryBagInterface):
     
 class TestUsedTilesTakeAllInterface(UsedTilesTakeAllInterface):
     def take_all(self) -> List[Tile]:
-        return [RED * 10]+[BLACK * 12]+[GREEN * 11]
+        return [RED] * 10 + [BLACK] * 12 + [GREEN] * 11
 
 class RngInterface(ABC):
     @abstractmethod

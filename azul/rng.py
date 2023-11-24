@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import List
 from azul.interfaces import RngInterface
-import random
+from random import randint
 
 class Rng(RngInterface):
     def permutation(self, count:int, length:int) -> List[int]:
