@@ -1,12 +1,11 @@
 from __future__ import annotations
 from typing import List
 from azul.simple_types import Tile, compress_tile_list
-from azul.interfaces import TileSource
+from azul.interfaces import TileSource, BagInterface
 from azul.table_center import TableCenter
-from azul.bag import Bag
 
 class Factory(TileSource):
-    def __init__(self, bag: Bag, table_center: TableCenter) -> None:
+    def __init__(self, bag: BagInterface, table_center: TableCenter) -> None:
         self._tiles = []
         self.bag = bag
         self.table_center = table_center
