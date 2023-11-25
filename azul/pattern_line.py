@@ -5,7 +5,7 @@ from azul.interfaces import UsedTilesGiveInterface, FloorInterface, WallLineInte
 
 
 class PatternLine:
-    _tiles: List[Optional[Tile]]
+    _tiles: List[Tile]
     _used_tiles: UsedTilesGiveInterface
     _floor: FloorInterface
     _wall_line: WallLineInterface
@@ -13,33 +13,37 @@ class PatternLine:
 
     def __init__(self, capacity: int, _used_tiles: UsedTilesGiveInterface,
                  floor: FloorInterface, wall_line: WallLineInterface) -> None:
-        self._tiles = [None for _ in range(capacity)]
+        self._tiles = []
         self._capacity = capacity
         self._used_tiles = _used_tiles
         self._floor = floor
         self._wall_line = wall_line
 
     def put(self, tiles: List[Tile]) -> None:
+        #erasing starting player from the tiles if needed
         if STARTING_PLAYER in tiles:
             self._floor.put([STARTING_PLAYER])
             tiles.remove(STARTING_PLAYER)
-        #checking if wallline has this tile
+        #checking if wallline has already tile which we are trying to put
         if self._wall_line.can_put_tile(tiles[0]):
-            none_pos : int = self._tiles.index(None)
+            #iterating through tiles to e put
             for tile in tiles:
-                if none_pos < self._capacity:
-                    self._tiles[none_pos] = tile
-                    none_pos += 1
+                #filling the capacity of pattern line
+                if len(self._tiles) < self._capacity:
+                    self._tiles.append(tile)
                 else:
+                    # if pattern line is filled drop tile to floor
                     self._floor.put([tile])
         else:
+            # if we make incorrect move drop tile to floor
             self._floor.put(tiles)
 
     def finish_round(self) -> Points:
-        if None not in self._tiles:
+        # if pattern line is full put the tile on wallline and rest to used tiles
+        if len(self._tiles) == self._capacity:
             tile = self._tiles[0]
             self._used_tiles.give(self._tiles[1:])
-            self._tiles = [None] * self._capacity
+            self._tiles = []
             return self._wall_line.put_tile(tile)
         return Points(0)
     
