@@ -1,15 +1,15 @@
 from __future__ import annotations
-from typing import List, Optional
+from typing import List
 import unittest
 from azul.simple_types import Tile, Points, RED, STARTING_PLAYER, compress_tile_list
 from azul.interfaces import FloorInterface, UsedTilesGiveInterface, WallLineInterface
 from azul.pattern_line import PatternLine
 
 class FakeUsedTilesGive(UsedTilesGiveInterface):
-    _tiles: List[Optional[Tile]]
+    _tiles: List[Tile]
     def __init__(self) -> None:
         self._tiles = []
-    def give(self, tiles:List[Optional[Tile]]) -> None:
+    def give(self, tiles:List[Tile]) -> None:
         self._tiles.extend(tiles)
 
 class FakeFloor(FloorInterface):
@@ -34,7 +34,7 @@ class FakeWallLine(WallLineInterface):
             return False    
         return True
         
-    def get_tiles(self) -> List[Optional[Tile]]:
+    def get_tiles(self) -> List[Tile]:
         return self._tiles
 
     def put_tile(self, tile: Tile) -> Points:

@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List, Optional
+from typing import List
 from azul.simple_types import Tile, Points, STARTING_PLAYER, compress_tile_list_with_empty_spaces
 from azul.interfaces import UsedTilesGiveInterface, FloorInterface, WallLineInterface
 
@@ -48,5 +48,6 @@ class PatternLine:
         return Points(0)
     
     def state(self) -> str:
-        return compress_tile_list_with_empty_spaces(self._tiles)
+        return compress_tile_list_with_empty_spaces(self._tiles + 
+                                                    [None] * (self._capacity - len(self._tiles)))
     
