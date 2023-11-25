@@ -72,9 +72,12 @@ class TestFactoryBag(FactoryBagInterface):
         return [RED]
 
 class FloorInterface(ABC):
-
     @abstractmethod
     def put(self, tiles: List[Tile]) -> None:
+        pass
+
+    @abstractmethod
+    def state(self)-> str:
         pass
 
 

@@ -6,7 +6,7 @@ from azul.table_center import TableCenter
 from azul.bag import Bag
 from azul.interfaces import TestRngInterface, TestUsedTilesTakeAllInterface
 
-class TestTableCenter(unittest.TestCase):
+class TestFactory(unittest.TestCase):
     def setUp(self) -> None:
         self.table_center: TableCenter = TableCenter()
         self.bag: Bag = Bag(TestUsedTilesTakeAllInterface(), TestRngInterface())
