@@ -6,10 +6,10 @@ from azul.interfaces import FloorInterface, UsedTilesGiveInterface, WallLineInte
 from azul.pattern_line import PatternLine
 
 class FakeUsedTilesGive(UsedTilesGiveInterface):
-    _tiles: List[Tile]
+    _tiles: List[Optional[Tile]]
     def __init__(self) -> None:
         self._tiles = []
-    def give(self, tiles:List[Tile]) -> None:
+    def give(self, tiles:List[Optional[Tile]]) -> None:
         self._tiles.extend(tiles)
 
 class FakeFloor(FloorInterface):
@@ -25,17 +25,15 @@ class FakeFloor(FloorInterface):
     
 class FakeWallLine(WallLineInterface):
     _tiles: List[Tile]
+    
     def __init__(self) -> None:
         self._tiles = [None] * 5
 
     def can_put_tile(self, tile: Tile) -> bool:
         if self._tiles[0] == tile:
-            return False
-        elif self._tiles[0] is None:
-            return True
-        else:
-            return False
-
+            return False    
+        return True
+        
     def get_tiles(self) -> List[Optional[Tile]]:
         return self._tiles
 
