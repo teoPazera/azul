@@ -2,15 +2,22 @@ from __future__ import annotations
 import unittest
 from typing import List
 from azul.simple_types import Tile, RED, GREEN, BLACK, BLUE, YELLOW, compress_tile_list
-from azul.interfaces import TestUsedTilesTakeAllInterface, UsedTilesTakeAllInterface
-from azul.interfaces import TestRngInterface, RngInterface
+from azul.interfaces import  UsedTilesTakeAllInterface, RngInterface
 from azul.bag import Bag
+
+class FakeUsedTilesTakeAllInterface(UsedTilesTakeAllInterface):
+    def take_all(self) -> List[Tile]:
+        return [RED] * 10 + [BLACK] * 12 + [GREEN] * 11
+
+class FakeRngInterface(RngInterface):
+    def permutation (self, count: int, length:int) -> List[int]:
+        return list(range(count))
 
 class TestBag(unittest.TestCase):
     _tiles:List[Tile]
     def setUp(self) -> None:
-        used_tiles: UsedTilesTakeAllInterface =  TestUsedTilesTakeAllInterface()
-        rng: RngInterface = TestRngInterface()
+        used_tiles: UsedTilesTakeAllInterface =  FakeUsedTilesTakeAllInterface()
+        rng: RngInterface = FakeRngInterface()
         self.bag: Bag = Bag(used_tiles, rng)
     
     def test_bag1(self) -> None:

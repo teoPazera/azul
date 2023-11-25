@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 from abc import ABC, abstractmethod
-from azul.simple_types import Tile, Points, FinishRoundResult, RED, GREEN, BLACK
+from azul.simple_types import Tile, Points, FinishRoundResult, RED
 
 
 class UsedTilesGiveInterface:
@@ -108,4 +108,3 @@ class BagInterface(ABC):
     @abstractmethod
     def state(self) -> str:
         pass
-
