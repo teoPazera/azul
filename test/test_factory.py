@@ -5,7 +5,7 @@ from azul.factory import Factory
 from azul.table_center import TableCenter
 from azul.interfaces import FactoryBagInterface,TestFactoryBag
 
-class TestTableCenter(unittest.TestCase):
+class TestFactory(unittest.TestCase):
     def setUp(self) -> None:
         self.table_center: TableCenter = TableCenter()
         bag: FactoryBagInterface = TestFactoryBag()
