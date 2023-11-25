@@ -22,7 +22,7 @@ class PatternLine:
 
     def put(self, tiles: List[Tile]) -> None:
         if STARTING_PLAYER in tiles:
-            self._floor.put(STARTING_PLAYER)
+            self._floor.put([STARTING_PLAYER])
             tiles.remove(STARTING_PLAYER)
         #checking if wallline has this tile
         if self._wall_line.can_put_tile(tiles[0]):
@@ -32,7 +32,7 @@ class PatternLine:
                     self._tiles[NonePos] = tile
                     NonePos += 1
                 else:
-                    self._floor.put(tile)
+                    self._floor.put([tile])
         else:
             self._floor.put(tiles)
 
