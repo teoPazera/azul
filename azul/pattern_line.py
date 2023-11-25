@@ -26,11 +26,11 @@ class PatternLine:
             tiles.remove(STARTING_PLAYER)
         #checking if wallline has this tile
         if self._wall_line.can_put_tile(tiles[0]):
-            NonePos : int = self._tiles.index(None)
+            none_pos : int = self._tiles.index(None)
             for tile in tiles:
-                if NonePos < self._capacity:
-                    self._tiles[NonePos] = tile
-                    NonePos += 1
+                if none_pos < self._capacity:
+                    self._tiles[none_pos] = tile
+                    none_pos += 1
                 else:
                     self._floor.put([tile])
         else:

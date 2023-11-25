@@ -74,13 +74,13 @@ class TestFactoryBag(FactoryBagInterface):
     
 class FloorInterface(ABC):
     @abstractmethod
-    def put(tiles: List[Tile]) -> List[Tile]:
+    def put(self, tiles: List[Tile]) -> None:
         pass
 
     @abstractmethod
     def state(self)-> str:
         pass
-    
+
 class WallLineInterface(ABC):
 
     @abstractmethod
