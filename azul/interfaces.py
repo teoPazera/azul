@@ -77,6 +77,10 @@ class FloorInterface(ABC):
     def put(tiles: List[Tile]) -> List[Tile]:
         pass
 
+    @abstractmethod
+    def state(self)-> str:
+        pass
+    
 class WallLineInterface(ABC):
 
     @abstractmethod
@@ -90,4 +94,3 @@ class WallLineInterface(ABC):
     @abstractmethod
     def put_tile(self, tile: Tile) -> Points:
         pass
-    
