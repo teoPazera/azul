@@ -76,3 +76,18 @@ class FloorInterface(ABC):
     @abstractmethod
     def put(tiles: List[Tile]) -> List[Tile]:
         pass
+
+class WallLineInterface(ABC):
+
+    @abstractmethod
+    def can_put_tile(self, tile: Tile) -> bool:
+        pass
+
+    @abstractmethod
+    def get_tiles(self) -> List[Optional[Tile]]:
+        pass
+
+    @abstractmethod
+    def put_tile(self, tile: Tile) -> Points:
+        pass
+    
