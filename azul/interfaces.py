@@ -95,15 +95,17 @@ class WallLineInterface(ABC):
     def put_tile(self, tile: Tile) -> Points:
         pass
 
-class TestUsedTilesTakeAllInterface(UsedTilesTakeAllInterface):
-    def take_all(self) -> List[Tile]:
-        return [RED] * 10 + [BLACK] * 12 + [GREEN] * 11
-
 class RngInterface(ABC):
     @abstractmethod
     def permutation (self, count: int, length:int) -> List[int]:
         pass
 
-class TestRngInterface(RngInterface):
-    def permutation (self, count: int, length:int) -> List[int]:
-        return list(range(count))
+class BagInterface(ABC):
+    @abstractmethod
+    def take (self, count: int) -> List[Tile]:
+        pass
+
+    @abstractmethod
+    def state(self) -> str:
+        pass
+

@@ -1,10 +1,10 @@
 from __future__ import annotations
 from typing import List
 from azul.simple_types import Tile, compress_tile_list, RED, GREEN, BLACK, BLUE, YELLOW
-from azul.interfaces import UsedTilesTakeAllInterface, RngInterface
+from azul.interfaces import UsedTilesTakeAllInterface, RngInterface, BagInterface
 
 
-class Bag:
+class Bag(BagInterface):
     _tiles: List[Tile]
     _take: List[int]
     def __init__(self, used_tiles: UsedTilesTakeAllInterface, rng: RngInterface) -> None:
