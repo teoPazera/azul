@@ -72,3 +72,7 @@ class TestFactoryBag(FactoryBagInterface):
     def take(self, count: int) -> List[Tile]:
         return [RED]
     
+class FloorInterface(ABC):
+    @abstractmethod
+    def put(tiles: List[Tile]) -> List[Tile]:
+        pass
