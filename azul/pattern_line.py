@@ -40,7 +40,7 @@ class PatternLine:
         if None not in self._tiles:
             tile = self._tiles[0]
             self._used_tiles.give(self._tiles[1:])
-            self._tiles = [None for _ in self._tiles]
+            self._tiles = [None] * self._capacity
             return self._wall_line.put_tile(tile)
         return Points(0)
     
