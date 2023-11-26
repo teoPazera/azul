@@ -34,7 +34,7 @@ class FakeWallLine(WallLineInterface):
             return False    
         return True
         
-    def get_tiles(self) -> List[Tile]:
+    def get_tiles(self) -> List[Optional[Tile]]:
         return self._tiles
 
     def put_tile(self, tile: Tile) -> Points:
