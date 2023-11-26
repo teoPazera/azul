@@ -12,6 +12,8 @@ class Factory(TileSource):
 
     def take(self, _idx: Tile) -> List[Tile]:
         _tiles = [i for i in self._tiles if i == _idx]
+        if len(_tiles) == 0:
+            raise KeyError('Desired tile was not in factory')
         while _tiles[0] in self._tiles:
             self._tiles.remove(_tiles[0])
         self.table_center.add(self._tiles)

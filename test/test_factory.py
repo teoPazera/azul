@@ -44,7 +44,7 @@ class TestFactory(unittest.TestCase):
         self.assertFalse(self.factory.is_empty())
         self.assertEqual(self.factory.state(), "RRGL")
         self.assertEqual([RED, RED], self.factory.take(RED))
-        self.assertTrue(self.factory.is_empty)
+        self.assertTrue(self.factory.is_empty())
         self.assertEqual(self.table_center.state(), "GL")
         
         
@@ -60,6 +60,10 @@ class TestFactory(unittest.TestCase):
         self.factory.start_new_round()
         self.assertEqual(self.factory.take(BLACK), [BLACK])
         self.assertEqual(self.table_center.state(), 'RRG')
+        try: 
+            self.factory.take(RED)
+        except KeyError:
+            self.assertTrue(self.factory.is_empty())
         self.factory.start_new_round()
         self.assertEqual(self.factory.take(YELLOW), [YELLOW])
         self.assertEqual(self.table_center.state(), 'RRGBRR')
