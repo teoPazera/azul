@@ -29,7 +29,7 @@ class PatternLine:
         if self._tiles:
             if self._tiles[0] != tiles[0]:
                 self._floor.put(tiles)
-                return None
+                return 
         if self._wall_line.can_put_tile(tiles[0]):
             #iterating through tiles to e put
             for tile in tiles:
