@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from azul.interfaces import Tile
+from azul.simple_types import Tile
 
 class GameInterface(ABC):
     @abstractmethod
