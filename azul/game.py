@@ -88,3 +88,7 @@ class Game(GameInterface):
 
     def start_game_test(self, player_ids: List[int]) -> None:
         self.generate_game(player_ids)
+
+    def play(self)-> None:
+        '''this method controlls whose turn it is'''
+        
