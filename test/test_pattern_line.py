@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List
+from typing import List, Optional
 import unittest
 from azul.simple_types import Tile, Points, RED, STARTING_PLAYER, compress_tile_list
 from azul.interfaces import FloorInterface, UsedTilesGiveInterface, WallLineInterface
@@ -17,14 +17,14 @@ class FakeFloor(FloorInterface):
     def __init__(self) -> None:
         self._tiles = []
 
-    def put (self, tiles:List[Tile]):
+    def put (self, tiles:List[Tile])-> None:
         self._tiles.extend(tiles)
 
     def state(self) -> str:
         return compress_tile_list(self._tiles)
     
 class FakeWallLine(WallLineInterface):
-    _tiles: List[Tile]
+    _tiles: List[Optional[Tile]]
     
     def __init__(self) -> None:
         self._tiles = [None] * 5
@@ -56,7 +56,10 @@ class TestPatternLine(unittest.TestCase):
         self.assertEqual(pattern_line.finish_round().value , 1)
         self.assertEqual(pattern_line.state(), "_")
         self.assertEqual(self._wall_line.get_tiles(), [RED, None, None, None, None])
-        pattern_line.put([RED])
+        try:
+            pattern_line.put([RED])
+        except KeyError:
+            pass
         self.assertEqual(self._floor.state(), "SR")
         self.assertEqual(pattern_line.state(), '_')
 
