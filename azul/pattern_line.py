@@ -6,15 +6,16 @@ from azul.interfaces import UsedTilesGiveInterface, FloorInterface, WallLineInte
 
 class PatternLine:
     _tiles: List[Tile]
+    _capacity: int
     _used_tiles: UsedTilesGiveInterface
     _floor: FloorInterface
     _wall_line: WallLineInterface
     tile : Tile
 
-    def __init__(self, capacity: int, _used_tiles: UsedTilesGiveInterface,
+    def __init__(self, _capacity: int, _used_tiles: UsedTilesGiveInterface,
                  floor: FloorInterface, wall_line: WallLineInterface) -> None:
         self._tiles = []
-        self._capacity = capacity
+        self._capacity = _capacity
         self._used_tiles = _used_tiles
         self._floor = floor
         self._wall_line = wall_line
