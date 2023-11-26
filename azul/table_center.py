@@ -13,7 +13,8 @@ class TableCenter(TileSource):
         if STARTING_PLAYER in self._tiles:
             _tiles.append(STARTING_PLAYER)
             self._tiles.remove(STARTING_PLAYER)
-
+        if len(_tiles) == 0:
+            raise KeyError('Desired tile was not in table_center')
         while _idx in self._tiles:
             self._tiles.remove(_idx)
         return _tiles

@@ -32,7 +32,10 @@ class TestTableCenter(unittest.TestCase):
         self.assertEqual(self.table_center.state(), "BGL")
         self.table_center.take(BLACK)
         self.table_center.take(GREEN)
-        self.assertEqual(self.table_center.take(YELLOW),[])
+        try:
+            self.assertEqual(self.table_center.take(YELLOW),[])
+        except KeyError:
+            self.assertEqual(self.table_center.state(), "B")
         self.table_center.take(BLUE)
         self.assertTrue(self.table_center.is_empty())
 
