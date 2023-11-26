@@ -26,6 +26,10 @@ class PatternLine:
             self._floor.put([STARTING_PLAYER])
             tiles.remove(STARTING_PLAYER)
         #checking if wallline has already tile which we are trying to put
+        if self._tiles:
+            if self._tiles[0] != tiles[0]:
+                self._floor.put(tiles)
+                return None
         if self._wall_line.can_put_tile(tiles[0]):
             #iterating through tiles to e put
             for tile in tiles:
@@ -50,6 +54,6 @@ class PatternLine:
         return Points(0)
     
     def state(self) -> str:
-        return compress_tile_list_with_empty_spaces(self._tiles + 
-                                                    [None] * (self._capacity - len(self._tiles)))
-    
+        return compress_tile_list_with_empty_spaces([None] *
+                     (self._capacity - len(self._tiles)) + self._tiles)
+  
