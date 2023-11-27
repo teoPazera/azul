@@ -47,7 +47,7 @@ class Board:
                 wall_line.put_line_down(self._wall_lines[index + 1])
             except IndexError:
                 pass
-            
+
         self._pattern_lines = []
         # create all pattern_lines
         for capacity in range(1, 6):
@@ -113,4 +113,6 @@ class Board:
         final += f"Pattern Lines:\n{p_lines_state}\n"
         final += f"Wall Lines:\n{wall_lines_state}\n"
         final += "-------------------\n"
+        final += f"Floor:\n{self._floor.state()}\n"
+        final += "-------------------"
         return final
