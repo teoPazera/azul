@@ -4,6 +4,7 @@ from test.test_bag import FakeRngInterface
 from interfaces.game_interface import GameInterface
 from azul.bag import Bag
 from azul.interfaces import RngInterface, GameFinishedInterface, FinalPointsCalculationInterface
+from azul.interfaces import BagInterface
 from azul.used_tiles import UsedTiles
 from azul.simple_types import Tile
 from azul.tablearea import TableArea
@@ -15,13 +16,13 @@ from azul.game_finished import GameFinished
 class Game(GameInterface):
     _used_tiles: UsedTiles 
     _rng: RngInterface 
-    _bag: Bag 
+    _bag: BagInterface
     _num_of_players: int
     _num_of_factories: int 
     _table_area: TableArea
     _game_finished: GameFinishedInterface
     _final_points: FinalPointsCalculationInterface
-    _boards: Dict[int,Board]
+    _boards: Dict[int, Board]
     _player_ids: List[int]
     _player_id: int
 
@@ -51,13 +52,13 @@ class Game(GameInterface):
             self._boards[player_id].put(destination_idx, 
                                         self._table_area.take(source_idx, tile_idx))
             if self._table_area.is_round_end():
-                board: Board
+                ids: int
                 _end_game: List[str] = []
-                for board in self._boards.items():
-                    _end_game.append(str(board.finish_round()))
+                for ids in self._player_ids:
+                    _end_game.append(str(self._boards[ids].finish_round()))
                 if "gameFinished" in _end_game:
-                    for board in self._boards.items():
-                        board.end_game()
+                    for ids in self._player_ids:
+                        self._boards[ids].end_game()
                 else:
                     self._table_area.start_new_round()
 
