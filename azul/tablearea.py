@@ -4,12 +4,12 @@ from azul.simple_types import Tile
 from azul.interfaces import TileSource
 from azul.table_center import TableCenter
 from azul.factory import Factory
-from azul.bag import Bag
+from azul.interfaces import BagInterface
 
 class TableArea():
     _tile_sources: List[TileSource]
 
-    def __init__(self, num_of_factories: int, bag: Bag) -> None:
+    def __init__(self, num_of_factories: int, bag: BagInterface) -> None:
         table_center: TableCenter = TableCenter()
         self._tile_sources = []
         self._tile_sources.append(table_center)
