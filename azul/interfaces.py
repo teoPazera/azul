@@ -74,7 +74,6 @@ class FloorInterface(ABC):
     def state(self)-> str:
         pass
 
-
 class WallLineInterface(ABC):
 
     @abstractmethod
