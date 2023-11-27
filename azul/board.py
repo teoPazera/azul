@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List, Optional
 from azul.simple_types import Tile, FinishRoundResult, Points, RED, BLUE, YELLOW, GREEN, BLACK
 from azul.interfaces import (GameFinishedInterface, FinalPointsCalculationInterface, 
-                             UsedTilesGiveInterface, FloorInterface)
+                             UsedTilesGiveInterface)
 from azul.floor import Floor
 from azul.wall_line import WallLine
 from azul.pattern_line import PatternLine
@@ -13,7 +13,7 @@ from azul.final_points_calculation import HorizontalRowPointsCalculation,\
 class Board:
     _game_finished: GameFinishedInterface
     _final_points: FinalPointsCalculationInterface
-    _floor: FloorInterface
+    _floor: Floor
     _pattern_lines: List[PatternLine]
     _wall_lines: List[WallLine]
     _points: Points
@@ -61,10 +61,19 @@ class Board:
     @property
     def points(self) -> Points:
         return self._points
+    
     @property
     def pattern_lines(self) -> List[PatternLine]:
-        return self.pattern_lines
-
+        return self._pattern_lines
+    
+    @property 
+    def floor(self) -> Floor:
+        return self._floor
+    
+    @property
+    def walllines(self) -> List[WallLine]:
+        return self._wall_lines
+        
     def put(self, destination: int, tiles: List[Tile]) -> None:
         """Puts tile to PatternLine.
         :destination: 0 to 4 (top to bottom)
