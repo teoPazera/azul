@@ -55,6 +55,10 @@ class FinalPointsCalculationInterface(ABC):
     def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
         pass
 
+    @abstractmethod
+    def add_component(self, *components: FinalPointsCalculationInterface) -> None:
+        pass
+
 class UsedTilesTakeAllInterface(ABC):
     @abstractmethod
     def take_all(self) -> List[Tile]:

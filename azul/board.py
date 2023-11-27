@@ -8,7 +8,7 @@ from azul.wall_line import WallLine
 from azul.pattern_line import PatternLine
 from azul.final_points_calculation import HorizontalRowPointsCalculation,\
     VerticalColumnPointsCalculation,\
-    ColorPointsCalculation, WallPointsCalculation, FinalPointsCalculation
+    ColorPointsCalculation, WallPointsCalculation
 
 class Board:
     _game_finished: GameFinishedInterface
