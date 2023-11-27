@@ -61,6 +61,9 @@ class Board:
     @property
     def points(self) -> Points:
         return self._points
+    @property
+    def pattern_lines(self) -> List[PatternLine]:
+        return self.pattern_lines
 
     def put(self, destination: int, tiles: List[Tile]) -> None:
         """Puts tile to PatternLine.
