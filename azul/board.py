@@ -6,7 +6,9 @@ from azul.interfaces import (GameFinishedInterface, FinalPointsCalculationInterf
 from azul.floor import Floor
 from azul.wall_line import WallLine
 from azul.pattern_line import PatternLine
-
+from azul.final_points_calculation import HorizontalRowPointsCalculation,\
+    VerticalColumnPointsCalculation,\
+    ColorPointsCalculation, WallPointsCalculation, FinalPointsCalculation
 
 class Board:
     _game_finished: GameFinishedInterface
@@ -87,9 +89,18 @@ class Board:
 
     def end_game(self) -> None:
         """Sums all bonus points from WallLines + current points"""
-        # get all points
+        # composite pattern for wall_state
+        horizontal: HorizontalRowPointsCalculation = HorizontalRowPointsCalculation()
+        vertical: VerticalColumnPointsCalculation = VerticalColumnPointsCalculation()
+        color: ColorPointsCalculation = ColorPointsCalculation()
+
+        component: WallPointsCalculation = WallPointsCalculation()
+        component.add_component(horizontal, vertical, color)
+        self._final_points.add_component(component)
+        # counting
         wall_state: List[List[Optional[Tile]]] = [w_line.get_tiles() for w_line in self._wall_lines]
         final_points: Points = self._final_points.get_points(wall_state)
+
         # sum them with current points
         self._points = Points.sum([self.points, final_points])
 
