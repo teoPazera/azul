@@ -34,13 +34,18 @@ class Game(GameInterface):
     def generate_game(self, _player_ids: List[int])-> None:
         self._num_of_players = len(_player_ids)
         self._player_ids = _player_ids
+
         _used_tiles = UsedTiles()
         _rng = FakeRngInterface() # for testing purposes
         _bag = Bag(_used_tiles, _rng)
+
         _num_of_factories = self._num_of_players * 2 + 1
         self._table_area = TableArea(_num_of_factories, _bag)
+        self._table_area.start_new_round()
+    
         self._starting_player = self._player_ids[0]
         self._player_order = self._player_ids #base order of players
+
         _game_finished = GameFinished()
         _final_points = FinalPointsCalculation()
         self._boards = {}
@@ -52,31 +57,45 @@ class Game(GameInterface):
     def take(self, player_id: int, source_idx: int, tile_idx: Tile, 
              destination_idx: int) -> bool:
         try:
-            _tiles: List[Tile] = self._table_area.take(source_idx, tile_idx)
-            if STARTING_PLAYER in _tiles:
-                self._starting_player = player_id
-            self._boards[player_id].put(destination_idx, _tiles)
-            if self._table_area.is_round_end():
-                ids: int
-                _end_game: List[str] = []
-                for ids in self._player_ids:
-                    _end_game.append(str(self._boards[ids].finish_round()))
-                if "gameFinished" in _end_game:
-                    for ids in self._player_ids:
-                        self._boards[ids].end_game()
-                else:
-                    self._table_area.start_new_round()
+            if self._player_ids: # to check if we inizialized game
+                if player_id != self._player_order[0]:
+                    raise IndexError(f'Player on move is {self._player_order[0]}\
+                                however {player_id} played this move')
+                _tiles: List[Tile] = self._table_area.take(source_idx, tile_idx)
+                if STARTING_PLAYER in _tiles:
+                    self._starting_player = player_id
 
-            return True
+                self._boards[player_id].put(destination_idx, _tiles)
+                if self._table_area.is_round_end():
+                    ids: int
+                    _end_game: List[str] = []
+                    for ids in self._player_ids:
+                        _end_game.append(str(self._boards[ids].finish_round()))
+                    if "gameFinished" in _end_game:
+                        for ids in self._player_ids:
+                            self._boards[ids].end_game()
+                    else:
+                        self._table_area.start_new_round()
+                        # constructing player order for next round 
+                        self._player_order = [self._starting_player] + self._player_order[
+                        self._player_order.index(self._starting_player)+1:] + self._player_order[
+                                :self._player_order.index(self._starting_player)]                                                   
+
+                #changing who is next on move
+                self._player_order.append(self._player_order.pop(0))
+                return True
+             
+            return False
         
-        except KeyError:
+        except (KeyError, IndexError) as e:
+            print(e)
             return False
         
 
     def start_game(self)-> None:
         _num_of_players = 0
         _player_ids: List[int] = []
-        print('register players by their player ids from (0-100)\
+        print('register players by their player ids from (0-100) each unique\
               if you input 0 registration will end ')
         while _num_of_players < 4:
             _player_id = int(input('write down first player id'))
@@ -87,30 +106,45 @@ class Game(GameInterface):
             elif _player_id == 0 and _num_of_players >= 2:
                 print('end of registration')
                 break
+            elif _player_id in _player_ids:
+                print('player id is not unique')
             else:
+                _player_ids.append(_player_id)
                 _num_of_players += 1
+
         print("registration succesfull")
         self.generate_game(_player_ids)
-        self.play()
-
-
-    def start_game_test(self, player_ids: List[int]) -> None:
-        if len(player_ids) > 4:
-            raise TypeError("Too many players")
-        if len(player_ids) < 2:
-            raise TypeError("Not enough players")
-        i: int
-        for i in player_ids:
-            if i > 0 and i <100:
-                pass
-            else:
-                raise IndexError("Wrong id")
-        self.generate_game(player_ids)
-        self.play()
         
 
-    def play(self) -> None:
-        ...
+
+    def start_game_test(self, player_ids: List[int]) -> bool:
+        if len(player_ids) > 4:
+            return False
+        if len(player_ids) < 2:
+            return False
+        i: int
+        unique_ids: list[int] = []
+        for i in player_ids:
+            if 100 > i > 0 :
+                if i not in unique_ids:
+                    unique_ids.append(i)
+                else:
+                    return False
+            else:
+                return False
+        self.generate_game(player_ids)
+        return True
+
+    @property
+    def table_area_state(self) -> str: 
+        return self._table_area.state()      
+
+    def board_state(self, player_id: int) -> str:
+        return self._boards[player_id].state()
+        
+
+    
+        
         
 if __name__ == "__main__":
     game = Game()
