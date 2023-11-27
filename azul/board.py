@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List, Optional
 from azul.simple_types import Tile, FinishRoundResult, Points, RED, BLUE, YELLOW, GREEN, BLACK
 from azul.interfaces import (GameFinishedInterface, FinalPointsCalculationInterface, 
-                             UsedTilesGiveInterface)
+                             UsedTilesGiveInterface, FloorInterface)
 from azul.floor import Floor
 from azul.wall_line import WallLine
 from azul.pattern_line import PatternLine
@@ -13,7 +13,7 @@ from azul.final_points_calculation import HorizontalRowPointsCalculation,\
 class Board:
     _game_finished: GameFinishedInterface
     _final_points: FinalPointsCalculationInterface
-    _floor: Floor
+    _floor: FloorInterface
     _pattern_lines: List[PatternLine]
     _wall_lines: List[WallLine]
     _points: Points
