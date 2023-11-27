@@ -10,7 +10,7 @@ class TableCenter(TileSource):
 
     def take(self, _idx: Tile) -> List[Tile]:
         _tiles = [i for i in self._tiles if i == _idx]
-        if STARTING_PLAYER in self._tiles:
+        if STARTING_PLAYER in self._tiles and STARTING_PLAYER not in _tiles:
             _tiles.append(STARTING_PLAYER)
             self._tiles.remove(STARTING_PLAYER)
         if len(_tiles) == 0:
