@@ -47,7 +47,8 @@ class Board:
                 wall_line.put_line_down(self._wall_lines[index + 1])
             except IndexError:
                 pass
-
+            
+        self._pattern_lines = []
         # create all pattern_lines
         for capacity in range(1, 6):
             p_line = PatternLine(capacity, used_tiles, self._floor, self._wall_lines[capacity - 1])
