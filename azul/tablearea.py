@@ -35,6 +35,6 @@ class TableArea():
         result: str = ""
         tile_source: TileSource
         for index, tile_source in enumerate(self._tile_sources):
-                result += str(index) + '-' + tile_source.state() + '\n'
+            result += str(index) + '-' + tile_source.state() + '\n'
             
         return result
