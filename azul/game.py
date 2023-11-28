@@ -112,7 +112,7 @@ class Game(GameInterface):
                 self._player_order.append(self._player_order.pop(0))
                 return True
              
-            return False
+            raise KeyError('Game not inicialized')
         
         except (KeyError, IndexError) as e:
             message = str(player_id) + ' made wrong move\n'
