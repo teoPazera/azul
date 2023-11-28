@@ -82,7 +82,7 @@ class TestBoard(unittest.TestCase):
         
         try:
             self._board.put(0, [RED])
-        except KeyError as e:
+        except KeyError:
             self.assertEqual(self._board.pattern_lines[0].state(), '_') 
                               
 
