@@ -42,7 +42,7 @@ class PatternLine:
         else:
             # if we make incorrect move drop tile to floor
             self._floor.put(tiles)
-            raise KeyError('Tried to put Tile when the wallLine is already filled')
+            
 
     def finish_round(self) -> Points:
         # if pattern line is full put the tile on wallline and rest to used tiles
