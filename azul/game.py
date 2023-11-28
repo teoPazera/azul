@@ -102,15 +102,15 @@ class Game(GameInterface):
                         message = 'round ended new order is \n'
                         
                         # constructing player order for next round 
-                        self._player_order = [self._starting_player] + self._player_order[
-                        self._player_order.index(self._starting_player)+1:] + self._player_order[
-                                :self._player_order.index(self._starting_player)]                                                   
+                        self._player_order.pop(self._player_order.index(self._starting_player))
+                        self._player_order.insert(0, self._starting_player)
 
                         message += '->'.join(str(self._player_order))
                         self._game_observer.notify_everybody(message)
 
-                #changing who is next on move
-                self._player_order.append(self._player_order.pop(0))
+                #changing who is next on move only in else cause it would mess up the order
+                else:   
+                    self._player_order.append(self._player_order.pop(0))
                 return True
             
             

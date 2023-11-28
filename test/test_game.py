@@ -25,6 +25,9 @@ class TestGame(unittest.TestCase):
         self.assertEqual(self._game.take(2, 0, BLACK, 1), True)
         #print(self._game.board_state(2))
         #print(self._game.table_area_state)
+        self.assertTrue(self._game.take(1, 1, RED, 1))
+
+        self.assertTrue(self._game.take(2, 0, BLACK, 1))
 
     def test_game2(self) -> None:
         self.assertFalse(self._game.start_game_test([1, 3, 3]))
@@ -54,6 +57,34 @@ class TestGame(unittest.TestCase):
             self.assertTrue(self._game.take(*i))
 
         
-        print(self._game.table_area_state)
-        print(self._game.board_state(69))
-        print(self._game.board_state(42))
+        #print(self._game.board_state(69))
+        #print(self._game.board_state(42))
+        #first round done
+
+        self.assertTrue(self._game.take(42,1,BLACK,4))
+        
+        moves_played = [[69, 2, GREEN, 0], [42, 0, RED, 1], [69, 3, YELLOW, 3],
+                        [42, 4, BLACK, 4], [69, 5, YELLOW, 3], [42, 0, BLACK, 4],
+                        [69, 0,GREEN, 2], (42, 0, YELLOW, 0), [69, 0, BLUE, 1],
+                        [42, 0, RED, 2]]
+        for i in moves_played:
+            self.assertTrue(self._game.take(*i))
+        
+        
+        #print(self._game.board_state(69))
+        #print(self._game.board_state(42))
+        #second round done
+        
+
+        moves_played = [[42, 1,RED, 2], [69, 2, YELLOW, 3], [42, 4, BLACK, 0],
+                        [69, 3, YELLOW, 0], [42,5, YELLOW, 3], [69, 0, GREEN, 4],
+                        [42, 0, BLUE, 4], [69, 0, BLACK, 2], [42,0, YELLOW, 3],
+                        [69, 0, RED, 1]]
+        for i in moves_played:
+            self.assertTrue(self._game.take(*i))
+        
+        # third round done 
+        #print(self._game.board_state(69))
+        #print(self._game.board_state(42))
+        
+        #print(self._game.table_area_state)
