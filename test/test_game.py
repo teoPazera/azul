@@ -56,11 +56,36 @@ class TestGame(unittest.TestCase):
         for i in moves_played:
             self.assertTrue(self._game.take(*i))
 
-        
         #print(self._game.board_state(69))
+        '''Points: 5
+        Pattern Lines:
+        _
+        __
+        ___
+        ___Y
+        ____G
+        Wall Lines:
+        __R__
+        __Y__
+        __B__
+        _____
+        _____'''
         #print(self._game.board_state(42))
-        #first round done
-
+        '''Points: -1
+        Pattern Lines:
+        _
+        __
+        ___
+        ___Y
+        ___LL
+        Wall Lines:
+        __R__
+        ____L
+        _G___
+        _____
+        _____'''
+        #first round done---------------------
+        
         self.assertTrue(self._game.take(42,1,BLACK,4))
         
         moves_played = [[69, 2, GREEN, 0], [42, 0, RED, 1], [69, 3, YELLOW, 3],
@@ -72,10 +97,35 @@ class TestGame(unittest.TestCase):
         
         
         #print(self._game.board_state(69))
+        '''Points: 10
+        Pattern Lines:
+        _
+        __
+        ___
+        _YYY
+        ____G
+        Wall Lines:
+        __R_G
+        _BY__
+        _GB__
+        _____
+        _____'''
         #print(self._game.board_state(42))
-        #second round done
+        '''Points: 0
+        Pattern Lines:
+        _
+        __
+        _RR
+        ___Y
+        _____
+        Wall Lines:
+        _YR__
+        ___RL
+        _G___
+        _____
+        __L__'''
+        #second round done--------------
         
-
         moves_played = [[42, 1,RED, 2], [69, 2, YELLOW, 3], [42, 4, BLACK, 0],
                         [69, 3, YELLOW, 0], [42,5, YELLOW, 3], [69, 0, GREEN, 4],
                         [42, 0, BLUE, 4], [69, 0, BLACK, 2], [42,0, YELLOW, 3],
@@ -83,8 +133,112 @@ class TestGame(unittest.TestCase):
         for i in moves_played:
             self.assertTrue(self._game.take(*i))
         
-        # third round done 
         #print(self._game.board_state(69))
+        '''Points: 21
+        Pattern Lines:
+        _
+        __
+        ___
+        ____
+        _____
+        Wall Lines:
+        _YR_G
+        _BYR_
+        LGB__
+        ____Y
+        ___G_'''
         #print(self._game.board_state(42))
+        '''Points: 7
+        Pattern Lines:
+        _
+        __
+        ___
+        _YYY
+        _BBBB
+        Wall Lines:
+        _YRL_
+        ___RL
+        _G__R
+        _____
+        __L__'''
         
-        #print(self._game.table_area_state)
+        # third round done 
+        
+        moves_played = [[69, 1, BLACK, 0], [42, 2, GREEN, 0], [69, 4, BLACK, 1],
+                        [42, 3, YELLOW, 3], [69,0, RED, 3], [42, 5, BLUE, 4],
+                        [69,0, BLUE, 4], [42,0, BLACK, 2], [69,0, GREEN, 3],
+                        [42,0, YELLOW, 1]]
+        for i in moves_played:
+            self.assertTrue(self._game.take(*i))
+        
+        
+
+        #print(self._game.board_state(69))
+        '''Points: 23
+        Pattern Lines:
+        _
+        _L
+        ___
+        ____
+        __BBB
+        Wall Lines:
+        _YRLG
+        _BYR_
+        LGB__
+        R___Y
+        ___G_'''
+
+        #print(self._game.board_state(42))
+        '''Points: 27
+        Pattern Lines:
+        _
+        __
+        _LL
+        ____
+        _____
+        Wall Lines:
+        _YRLG
+        __YRL
+        _G__R
+        ____Y
+        __L_B'''
+        #end of 4th round
+       
+        moves_played = [[69,1, BLUE, 0], [42, 3, BLUE, 0], [69,2, BLACK, 1],
+                        [42,4,BLACK, 2], [69,0, RED, 2], [42,5, BLUE, 1],
+                        [69, 0, GREEN, 3], [42,0, BLUE, 1], [69, 0, BLACK, 4],
+                        [42,0, YELLOW, 4]]
+        for i in moves_played:
+            self.assertTrue(self._game.take(*i))
+
+        #print(self._game.board_state(69))
+        '''Points: 40
+        Pattern Lines:
+        _
+        __
+        ___
+        ____
+        __BBB
+        Wall Lines:
+        BYRLG
+        _BYRL
+        LGB_R
+        R_G_Y
+        ___G_'''
+
+        #print(self._game.board_state(42))
+        '''Points: 50
+        Pattern Lines:
+        _
+        __
+        ___
+        ____
+        _YYYY
+        Wall Lines:
+        BYRLG
+        _BYRL
+        LG__R
+        ____Y
+        __L_B'''
+        
+       #end of the game

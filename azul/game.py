@@ -94,8 +94,8 @@ class Game(GameInterface):
                         message = 'gamescore is \n'
                         for ids in self._player_ids:
                             self._boards[ids].end_game()
-                            message += str(ids) + ' = ' + self._boards[ids].points + '\n'
-
+                            message += str(ids) + ' = ' + str(self._boards[ids].points) + '\n'
+                        
                         self._game_observer.notify_everybody(message)
                     else:
                         self._table_area.start_new_round()
