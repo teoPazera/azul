@@ -25,11 +25,14 @@ class PatternLine:
         if STARTING_PLAYER in tiles:
             self._floor.put([STARTING_PLAYER])
             tiles.remove(STARTING_PLAYER)
+            if len(tiles) == 0:
+                return
         #checking if wallline has already tile which we are trying to put
         if self._tiles:
             if self._tiles[0] != tiles[0]:
                 self._floor.put(tiles)
                 return 
+            
         if self._wall_line.can_put_tile(tiles[0]):
             #iterating through tiles to e put
             for tile in tiles:
