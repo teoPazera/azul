@@ -2,15 +2,20 @@ from __future__ import annotations
 from typing import  Dict, List
 from test.test_bag import FakeRngInterface
 from interfaces.game_interface import GameInterface
+from interfaces.observer_interface import ObserverInterface
+from interfaces.game_observer_interface import GameObserverInterface
 from azul.bag import Bag
 from azul.interfaces import RngInterface, GameFinishedInterface, FinalPointsCalculationInterface
 from azul.interfaces import BagInterface
 from azul.used_tiles import UsedTiles
-from azul.simple_types import Tile, STARTING_PLAYER
+from azul.simple_types import Tile, STARTING_PLAYER, compress_tile_list
 from azul.tablearea import TableArea
 from azul.board import Board
 from azul.final_points_calculation import FinalPointsCalculation
 from azul.game_finished import GameFinished
+from azul.game_observer import GameObserver
+from azul.observer import Observer
+
 
     
 class Game(GameInterface):
@@ -27,6 +32,8 @@ class Game(GameInterface):
     _player_id: int
     _player_order: List[int]
     _starting_player: int
+    _observer: ObserverInterface
+    _game_observer: GameObserverInterface
 
     def __init__(self) -> None:
         self._player_ids = []
@@ -49,10 +56,12 @@ class Game(GameInterface):
         _game_finished = GameFinished()
         _final_points = FinalPointsCalculation()
         self._boards = {}
+        self._game_observer = GameObserver()
         for i in _player_ids:
             self._boards[i] = Board(_game_finished, _final_points, _used_tiles)
+            _observer = Observer()
+            self._game_observer.register_observer(_observer)
             
-        
 
     def take(self, player_id: int, source_idx: int, tile_idx: Tile, 
              destination_idx: int) -> bool:
@@ -62,24 +71,42 @@ class Game(GameInterface):
                     raise IndexError(f'Player on move is {self._player_order[0]}\
                                 however {player_id} played this move')
                 _tiles: List[Tile] = self._table_area.take(source_idx, tile_idx)
+                # notify observers about the move
+                message: str = str(player_id) + ' took ' + compress_tile_list(_tiles)
+                self._game_observer.notify_everybody(message)
+
                 if STARTING_PLAYER in _tiles:
                     self._starting_player = player_id
 
-                self._boards[player_id].put(destination_idx, _tiles)
+                board: Board = self._boards[player_id]
+                board.put(destination_idx, _tiles)
+                message = "tiles placed " + board.pattern_lines[destination_idx].state()
+                self._game_observer.notify_everybody(message)
+
                 if self._table_area.is_round_end():
                     ids: int
                     _end_game: List[str] = []
                     for ids in self._player_ids:
                         _end_game.append(str(self._boards[ids].finish_round()))
                     if "gameFinished" in _end_game:
+                        self._game_observer.notify_everybody('game finished')
+                        message = 'gamescore is \n'
                         for ids in self._player_ids:
                             self._boards[ids].end_game()
+                            message += str(ids) + ' = ' + self._boards[ids].points + '\n'
+
+                        self._game_observer.notify_everybody(message)
                     else:
                         self._table_area.start_new_round()
+                        message = 'round ended new order is \n'
+                        
                         # constructing player order for next round 
                         self._player_order = [self._starting_player] + self._player_order[
                         self._player_order.index(self._starting_player)+1:] + self._player_order[
                                 :self._player_order.index(self._starting_player)]                                                   
+
+                        message += '->'.join(self._player_order)
+                        self._game_observer.notify_everybody(message)
 
                 #changing who is next on move
                 self._player_order.append(self._player_order.pop(0))
@@ -88,7 +115,9 @@ class Game(GameInterface):
             return False
         
         except (KeyError, IndexError) as e:
-            print(e)
+            message = str(player_id) + ' made wrong move\n'
+            message += str(e) 
+            self._game_observer.notify_everybody(message)
             return False
         
 
