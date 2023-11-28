@@ -37,6 +37,7 @@ class Game(GameInterface):
 
     def __init__(self) -> None:
         self._player_ids = []
+        self._game_observer = GameObserver()
 
     def generate_game(self, _player_ids: List[int])-> None:
         self._num_of_players = len(_player_ids)
@@ -56,7 +57,7 @@ class Game(GameInterface):
         _game_finished = GameFinished()
         _final_points = FinalPointsCalculation()
         self._boards = {}
-        self._game_observer = GameObserver()
+        
         for i in _player_ids:
             self._boards[i] = Board(_game_finished, _final_points, _used_tiles)
             _observer = Observer()
@@ -105,13 +106,14 @@ class Game(GameInterface):
                         self._player_order.index(self._starting_player)+1:] + self._player_order[
                                 :self._player_order.index(self._starting_player)]                                                   
 
-                        message += '->'.join(self._player_order)
+                        message += '->'.join(str(self._player_order))
                         self._game_observer.notify_everybody(message)
 
                 #changing who is next on move
                 self._player_order.append(self._player_order.pop(0))
                 return True
-             
+            
+            
             raise KeyError('Game not inicialized')
         
         except (KeyError, IndexError) as e:
