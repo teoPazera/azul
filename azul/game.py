@@ -147,6 +147,8 @@ class Game(GameInterface):
 
 
     def start_game_test(self, player_ids: List[int]) -> bool:
+        if self._in_game:
+            return False
         if len(player_ids) > 4:
             return False
         if len(player_ids) < 2:
