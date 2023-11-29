@@ -1,9 +1,9 @@
 from __future__ import annotations
 from typing import List, Optional
 from azul.simple_types import Tile, FinishRoundResult, NORMAL, GAME_FINISHED
+from azul.interfaces import GameFinishedInterface
 
-
-class GameFinished:
+class GameFinished(GameFinishedInterface):
     
     def game_finished(self, wall: List[List[Optional[Tile]]]) -> FinishRoundResult:
         """Determines whether game should end

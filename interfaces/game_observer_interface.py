@@ -12,3 +12,8 @@ class GameObserverInterface(ABC):
     @abstractmethod
     def cancel_observer(self, observer: Observer) -> None:
         pass
+
+    @abstractmethod
+    def notify_everybody(self, state: str) -> None:
+        pass
+    

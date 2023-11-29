@@ -1,10 +1,10 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-
+from azul.simple_types import Tile
 
 class GameInterface(ABC):
     @abstractmethod
-    def take(self, player_id: int, source_idx: int, tile_idx: int, destination_idx: int) -> bool:
+    def take(self, player_id: int, source_idx: int, tile_idx: Tile, destination_idx: int) -> bool:
         """Method for communicating between players and the game
         
         returns whether the move was successful

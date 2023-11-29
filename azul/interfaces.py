@@ -9,8 +9,6 @@ class UsedTilesGiveInterface:
     def give(self, tiles: List[Tile]) -> None:
         pass
 
-
-
 class GameFinishedInterface(ABC):
     @abstractmethod
     def game_finished(self, wall: List[List[Optional[Tile]]]) -> FinishRoundResult:
@@ -57,23 +55,24 @@ class FinalPointsCalculationInterface(ABC):
     def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
         pass
 
+    @abstractmethod
+    def add_component(self, *components: FinalPointsCalculationInterface) -> None:
+        pass
 
 class UsedTilesTakeAllInterface(ABC):
     @abstractmethod
     def take_all(self) -> List[Tile]:
         pass
 
-class FactoryBagInterface(ABC):
-    @abstractmethod
-    def take(self, count: int) -> List[Tile]:
-        pass
 
 class FloorInterface(ABC):
-
     @abstractmethod
     def put(self, tiles: List[Tile]) -> None:
         pass
 
+    @abstractmethod
+    def state(self)-> str:
+        pass
 
 class WallLineInterface(ABC):
 
@@ -87,4 +86,18 @@ class WallLineInterface(ABC):
 
     @abstractmethod
     def put_tile(self, tile: Tile) -> Points:
+        pass
+
+class RngInterface(ABC):
+    @abstractmethod
+    def permutation (self, count: int, length:int) -> List[int]:
+        pass
+
+class BagInterface(ABC):
+    @abstractmethod
+    def take (self, count: int) -> List[Tile]:
+        pass
+
+    @abstractmethod
+    def state(self) -> str:
         pass

@@ -16,6 +16,7 @@ class FinalPointsCalculation(FinalPointsCalculationInterface):
     def get_points(self, wall: List[List[Optional[Tile]]]) -> Points:
         return Points.sum([component.get_points(wall) for component in self._components])
     
+    
 
 class WallPointsCalculation(FinalPointsCalculationInterface):
     
@@ -40,6 +41,10 @@ class HorizontalRowPointsCalculation(FinalPointsCalculationInterface):
 
         return Points(points)
 
+    
+    def add_component(self, *components: FinalPointsCalculationInterface) -> None:
+        pass
+
 
 class VerticalColumnPointsCalculation(FinalPointsCalculationInterface):
 
@@ -51,6 +56,9 @@ class VerticalColumnPointsCalculation(FinalPointsCalculationInterface):
             
         return Points(points)
 
+    
+    def add_component(self, *components: FinalPointsCalculationInterface) -> None:
+        pass
 
 class ColorPointsCalculation(FinalPointsCalculationInterface):
     
@@ -61,3 +69,7 @@ class ColorPointsCalculation(FinalPointsCalculationInterface):
                 points += 10
 
         return Points(points)
+
+    
+    def add_component(self, *components: FinalPointsCalculationInterface) -> None:
+        pass

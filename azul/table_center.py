@@ -10,10 +10,11 @@ class TableCenter(TileSource):
 
     def take(self, _idx: Tile) -> List[Tile]:
         _tiles = [i for i in self._tiles if i == _idx]
-        if STARTING_PLAYER in self._tiles:
+        if STARTING_PLAYER in self._tiles and STARTING_PLAYER not in _tiles:
             _tiles.append(STARTING_PLAYER)
             self._tiles.remove(STARTING_PLAYER)
-
+        if len(_tiles) == 0:
+            raise KeyError('Desired tile was not in table_center')
         while _idx in self._tiles:
             self._tiles.remove(_idx)
         return _tiles
