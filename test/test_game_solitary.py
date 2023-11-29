@@ -1,7 +1,7 @@
 from __future__ import annotations
 import unittest
 from azul.game import Game
-from azul.simple_types import YELLOW, RED, GREEN, BLACK
+
 
 class TestGameSolitary(unittest.TestCase):
     def setUp(self) -> None:
@@ -15,5 +15,4 @@ class TestGameSolitary(unittest.TestCase):
         self.assertFalse(self._game.start_game_test([1,2]))
         self._game.end_game()
         self.assertTrue(self._game.start_game_test([1,2]))
-    
     

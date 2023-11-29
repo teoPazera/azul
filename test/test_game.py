@@ -2,7 +2,7 @@ from __future__ import annotations
 import unittest
 from typing import List, Any
 from azul.game import Game
-from azul.simple_types import YELLOW, RED, BLACK, BLUE, GREEN, STARTING_PLAYER
+from azul.simple_types import YELLOW, RED, BLACK, BLUE, GREEN
 
 
 class TestGame(unittest.TestCase):
@@ -11,21 +11,24 @@ class TestGame(unittest.TestCase):
     
     def test_valid_moves_only(self) -> None:
         self.assertTrue(self._game.start_game_test([1, 2]))
-        self.assertEqual(self._game.table_area_state, '0-S\n1-RGLB\n2-YRGL\n3-BYRG\n4-LBYR\n5-GLBY\n')
+        state:str = '0-S\n1-RGLB\n2-YRGL\n3-BYRG\n4-LBYR\n5-GLBY\n'
+        self.assertEqual(self._game.table_area_state, state)
         self.assertEqual(self._game.take(1, 2, YELLOW, 0), True)
-        self.assertEqual(self._game.table_area_state, '0-SRGL\n1-RGLB\n2-\n3-BYRG\n4-LBYR\n5-GLBY\n')
-        self.assertEqual(self._game.board(1).pattern_lines[0]._tiles, [YELLOW])
+        state = '0-SRGL\n1-RGLB\n2-\n3-BYRG\n4-LBYR\n5-GLBY\n'
+        self.assertEqual(self._game.table_area_state, state)
+        self.assertEqual(self._game.board(1).pattern_lines[0].state(), 'Y')
         self.assertEqual(self._game.take(2, 0, RED, 0), True)
-        self.assertEqual(self._game.table_area_state, '0-GL\n1-RGLB\n2-\n3-BYRG\n4-LBYR\n5-GLBY\n')
-        self.assertEqual(self._game.board(2).pattern_lines[0]._tiles, [RED])
+        state = '0-GL\n1-RGLB\n2-\n3-BYRG\n4-LBYR\n5-GLBY\n'
+        self.assertEqual(self._game.table_area_state, state)
+        self.assertEqual(self._game.board(2).pattern_lines[0].state(), 'R')
         self.assertEqual(self._game.take(1, 5, GREEN, 0), True)
-        self.assertEqual(self._game.board(1).pattern_lines[0]._tiles, [YELLOW])
+        self.assertEqual(self._game.board(1).pattern_lines[0].state(), 'Y')
         self.assertEqual(self._game.take(2, 0, BLACK, 1), True)
-        self.assertEqual(self._game.board(2).pattern_lines[1]._tiles, [BLACK, BLACK])
+        self.assertEqual(self._game.board(2).pattern_lines[1].state(), 'LL')
         self.assertTrue(self._game.take(1, 1, RED, 1))
-        self.assertEqual(self._game.board(1).pattern_lines[1]._tiles, [RED])
+        self.assertEqual(self._game.board(1).pattern_lines[1].state(), '_R')
         self.assertTrue(self._game.take(2, 0, BLACK, 1))
-        self.assertEqual(self._game.board(2).pattern_lines[1]._tiles, [BLACK, BLACK])
+        self.assertEqual(self._game.board(2).pattern_lines[1].state(), 'LL')
         self.assertEqual(self._game.table_area_state, '0-GBYGB\n1-\n2-\n3-BYRG\n4-LBYR\n5-\n')
     
     def test_game2(self) -> None:

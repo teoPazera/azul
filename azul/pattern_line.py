@@ -59,4 +59,4 @@ class PatternLine:
     def state(self) -> str:
         return compress_tile_list_with_empty_spaces([None] *
                      (self._capacity - len(self._tiles)) + self._tiles)
-  
+    
