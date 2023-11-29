@@ -29,6 +29,8 @@ class TestGame(unittest.TestCase):
         self.assertEqual(self._game.table_area_state, '0-GBYGB\n1-\n2-\n3-BYRG\n4-LBYR\n5-\n')
     
     def test_game2(self) -> None:
+        #taking before gaem started
+        self.assertFalse(self._game.take(1,1,RED, 0))
         self._game.start_game_test([1, 2])
         #taking from table center, tiel that is not there
         self.assertTrue(self._game.take(1,0, RED, 0))
@@ -44,7 +46,9 @@ class TestGame(unittest.TestCase):
         self.assertTrue(self._game.take(1, 2, RED, 0))
         self.assertTrue(self._game.take(2, 3, RED, 0))
         self.assertEqual(self._game.board(2).floor.state(), 'R')
-        
+        #taking with random id 
+        self.assertFalse(self._game.take(50,1,RED, 0))
+
 
 
 
