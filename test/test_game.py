@@ -261,5 +261,5 @@ class TestGame(unittest.TestCase):
         ____Y
         __L_B'''
         
-       #end of the game
-       
+        self.assertFalse(self._game.take(69, 1, RED, 0))
+        #end of the game
