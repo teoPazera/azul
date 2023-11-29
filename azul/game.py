@@ -8,7 +8,7 @@ from azul.bag import Bag
 from azul.interfaces import RngInterface, GameFinishedInterface, FinalPointsCalculationInterface
 from azul.interfaces import BagInterface
 from azul.used_tiles import UsedTiles
-from azul.simple_types import Tile, STARTING_PLAYER, compress_tile_list
+from azul.simple_types import Tile, STARTING_PLAYER, compress_tile_list, Points
 from azul.tablearea import TableArea
 from azul.board import Board
 from azul.final_points_calculation import FinalPointsCalculation
@@ -34,12 +34,15 @@ class Game(GameInterface):
     _starting_player: int
     _observer: ObserverInterface
     _game_observer: GameObserverInterface
+    _in_game: bool
 
     def __init__(self) -> None:
         self._player_ids = []
         self._game_observer = GameObserver()
+        self._in_game = False
 
     def generate_game(self, _player_ids: List[int])-> None:
+        self._in_game = True
         self._num_of_players = len(_player_ids)
         self._player_ids = _player_ids
 
@@ -67,7 +70,7 @@ class Game(GameInterface):
     def take(self, player_id: int, source_idx: int, tile_idx: Tile, 
              destination_idx: int) -> bool:
         try:
-            if self._player_ids: # to check if we inizialized game
+            if self._in_game: # to check if we inizialized game
                 if player_id != self._player_order[0]:
                     raise IndexError(f'Player on move is {self._player_order[0]}\
                                 however {player_id} played this move')
@@ -90,13 +93,8 @@ class Game(GameInterface):
                     for ids in self._player_ids:
                         _end_game.append(str(self._boards[ids].finish_round()))
                     if "gameFinished" in _end_game:
-                        self._game_observer.notify_everybody('game finished')
-                        message = 'gamescore is \n'
-                        for ids in self._player_ids:
-                            self._boards[ids].end_game()
-                            message += str(ids) + ' = ' + str(self._boards[ids].points) + '\n'
+                        self.end_game()
                         
-                        self._game_observer.notify_everybody(message)
                     else:
                         self._table_area.start_new_round()
                         message = 'round ended new order is \n'
@@ -114,7 +112,7 @@ class Game(GameInterface):
                 return True
             
             
-            raise KeyError('Game not inicialized')
+            raise KeyError('Game not inicialized or finished')
         
         except (KeyError, IndexError) as e:
             message = str(player_id) + ' made wrong move\n'
@@ -174,7 +172,26 @@ class Game(GameInterface):
         return self._boards[player_id].state()
         
 
-    
+    def end_game(self) -> None:
+        message = 'game finished\nentire scoreboard is \n'
+        winner: int = 0
+        winner_points: Points = Points(0)
+        for ids in self._player_ids:
+            self._boards[ids].end_game()
+            message += "player: " + str(ids) + ' = ' + str(self._boards[ids].points) + '\n'
+            if winner_points.value <= self._boards[ids].points.value:
+                winner = ids
+                winner_points = self._boards[ids].points
+                
+            
+        self._game_observer.notify_everybody(message)
+        
+        print('Game is over')
+        print(f'winner is {winner} with {winner_points}')
+        print(message)
+        self._in_game = False
+
+
         
         
 if __name__ == "__main__":

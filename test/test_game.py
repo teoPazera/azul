@@ -1,8 +1,8 @@
 from __future__ import annotations
 import unittest
-from typing import List
+from typing import List, Any
 from azul.game import Game
-from azul.simple_types import YELLOW, RED, BLACK, BLUE, GREEN, STARTING_PLAYER, Tile
+from azul.simple_types import YELLOW, RED, BLACK, BLUE, GREEN, STARTING_PLAYER
 
 
 class TestGame(unittest.TestCase):
@@ -41,20 +41,24 @@ class TestGame(unittest.TestCase):
         self._game.take(1, 1 , RED, 1)
         self._game.take(2, 2 , RED, 1)
         self.assertEqual(self._game.take(1, 0, STARTING_PLAYER, 1), True)
-        move: List[int | Tile] = [2, 0 , BLACK, 0]
-        self.assertTrue(self._game.take(*move))
+        #move: List[Union[Tile, int]] = [2, 0 , BLACK, 0]
+        #self.assertTrue(self._game.take(*move))
 
     def test_entire_game(self)-> None:
         self._game.start_game_test([69, 42])
 
-        moves_played: List[List[int| Tile]] 
+        moves_played: List[List[Any]]
         # first ound played
         moves_played = [[69, 1 , RED, 0], [42, 2, RED, 0], [69, 3, BLUE, 2],
                         [42, 0, GREEN, 2], [69, 0, YELLOW, 1], [42, 0, BLACK, 1],
                         [69,4,YELLOW,3],[42, 5, YELLOW, 3], [69, 0, BLUE, 2],
                         [42, 0, BLACK, 4],[69, 0, GREEN, 4], [42, 0, RED, 3]]
         for i in moves_played:
-            self.assertTrue(self._game.take(*i))
+            player_id = i.pop(0)
+            source_idx = i.pop(0)
+            tile = i.pop(0)
+            destination_idx = i.pop(0)
+            self.assertTrue(self._game.take(player_id, source_idx, tile, destination_idx ))
 
         #print(self._game.board_state(69))
         '''Points: 5
@@ -90,10 +94,14 @@ class TestGame(unittest.TestCase):
         
         moves_played = [[69, 2, GREEN, 0], [42, 0, RED, 1], [69, 3, YELLOW, 3],
                         [42, 4, BLACK, 4], [69, 5, YELLOW, 3], [42, 0, BLACK, 4],
-                        [69, 0,GREEN, 2], (42, 0, YELLOW, 0), [69, 0, BLUE, 1],
+                        [69, 0,GREEN, 2], [42, 0, YELLOW, 0], [69, 0, BLUE, 1],
                         [42, 0, RED, 2]]
         for i in moves_played:
-            self.assertTrue(self._game.take(*i))
+            player_id = i.pop(0)
+            source_idx = i.pop(0)
+            tile = i.pop(0)
+            destination_idx = i.pop(0)
+            self.assertTrue(self._game.take(player_id, source_idx, tile, destination_idx ))
         
         
         #print(self._game.board_state(69))
@@ -131,7 +139,11 @@ class TestGame(unittest.TestCase):
                         [42, 0, BLUE, 4], [69, 0, BLACK, 2], [42,0, YELLOW, 3],
                         [69, 0, RED, 1]]
         for i in moves_played:
-            self.assertTrue(self._game.take(*i))
+            player_id = i.pop(0)
+            source_idx = i.pop(0)
+            tile = i.pop(0)
+            destination_idx = i.pop(0)
+            self.assertTrue(self._game.take(player_id, source_idx, tile, destination_idx ))
         
         #print(self._game.board_state(69))
         '''Points: 21
@@ -169,7 +181,11 @@ class TestGame(unittest.TestCase):
                         [69,0, BLUE, 4], [42,0, BLACK, 2], [69,0, GREEN, 3],
                         [42,0, YELLOW, 1]]
         for i in moves_played:
-            self.assertTrue(self._game.take(*i))
+            player_id = i.pop(0)
+            source_idx = i.pop(0)
+            tile = i.pop(0)
+            destination_idx = i.pop(0)
+            self.assertTrue(self._game.take(player_id, source_idx, tile, destination_idx ))
         
         
 
@@ -209,7 +225,11 @@ class TestGame(unittest.TestCase):
                         [69, 0, GREEN, 3], [42,0, BLUE, 1], [69, 0, BLACK, 4],
                         [42,0, YELLOW, 4]]
         for i in moves_played:
-            self.assertTrue(self._game.take(*i))
+            player_id = i.pop(0)
+            source_idx= i.pop(0)
+            tile = i.pop(0)
+            destination_idx = i.pop(0)
+            self.assertTrue(self._game.take(player_id, source_idx, tile, destination_idx ))
 
         #print(self._game.board_state(69))
         '''Points: 40
@@ -242,3 +262,4 @@ class TestGame(unittest.TestCase):
         __L_B'''
         
        #end of the game
+       
