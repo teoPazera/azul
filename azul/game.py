@@ -172,7 +172,9 @@ class Game(GameInterface):
 
     def board_state(self, player_id: int) -> str:
         return self._boards[player_id].state()
-        
+    
+    def board(self, player_id: int) -> str:
+        return self._boards[player_id]
 
     def end_game(self) -> None:
         message = 'game finished\nentire scoreboard is \n'
