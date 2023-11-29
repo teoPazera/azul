@@ -8,40 +8,47 @@ from azul.simple_types import YELLOW, RED, BLACK, BLUE, GREEN, STARTING_PLAYER
 class TestGame(unittest.TestCase):
     def setUp(self) -> None:
         self._game = Game()
-    def test_game1(self) -> None:
-        self.assertTrue(self._game.start_game_test([1, 2]))
-        self.assertEqual(self._game.take(1, 2, YELLOW, 0), True)
-        #print(self._game.board_state(1))
-        #print(self._game.table_area_state)
-        
-        self.assertEqual(self._game.take(2, 0, RED, 0), True)
-        #print(self._game.board_state(2))
-        #print(self._game.table_area_state)
-
-        self.assertEqual(self._game.take(1, 5, GREEN, 0), True)
-        #print(self._game.board_state(1))
-        #print(self._game.table_area_state)
-
-        self.assertEqual(self._game.take(2, 0, BLACK, 1), True)
-        #print(self._game.board_state(2))
-        #print(self._game.table_area_state)
-        self.assertTrue(self._game.take(1, 1, RED, 1))
-
-        self.assertTrue(self._game.take(2, 0, BLACK, 1))
-
     
+    def test_valid_moves_only(self) -> None:
+        self.assertTrue(self._game.start_game_test([1, 2]))
+        self.assertEqual(self._game.table_area_state, '0-S\n1-RGLB\n2-YRGL\n3-BYRG\n4-LBYR\n5-GLBY\n')
+        self.assertEqual(self._game.take(1, 2, YELLOW, 0), True)
+        self.assertEqual(self._game.table_area_state, '0-SRGL\n1-RGLB\n2-\n3-BYRG\n4-LBYR\n5-GLBY\n')
+        self.assertEqual(self._game.board(1).pattern_lines[0]._tiles, [YELLOW])
+        self.assertEqual(self._game.take(2, 0, RED, 0), True)
+        self.assertEqual(self._game.table_area_state, '0-GL\n1-RGLB\n2-\n3-BYRG\n4-LBYR\n5-GLBY\n')
+        self.assertEqual(self._game.board(2).pattern_lines[0]._tiles, [RED])
+        self.assertEqual(self._game.take(1, 5, GREEN, 0), True)
+        self.assertEqual(self._game.board(1).pattern_lines[0]._tiles, [YELLOW])
+        self.assertEqual(self._game.take(2, 0, BLACK, 1), True)
+        self.assertEqual(self._game.board(2).pattern_lines[1]._tiles, [BLACK, BLACK])
+        self.assertTrue(self._game.take(1, 1, RED, 1))
+        self.assertEqual(self._game.board(1).pattern_lines[1]._tiles, [RED])
+        self.assertTrue(self._game.take(2, 0, BLACK, 1))
+        self.assertEqual(self._game.board(2).pattern_lines[1]._tiles, [BLACK, BLACK])
+        self.assertEqual(self._game.table_area_state, '0-GBYGB\n1-\n2-\n3-BYRG\n4-LBYR\n5-\n')
     
     def test_game2(self) -> None:
-        #TODO wrong take
-        ...
+        self._game.start_game_test([1, 2])
+        #taking from table center, tiel that is not there
+        self.assertTrue(self._game.take(1,0, RED, 0))
+        self.assertEqual(self._game.board(1).floor.state(), 'S')
+        #incorrect order
+        self.assertFalse(self._game.take(1,0,RED, 1))
+        #taking tile from an empty table center
+        self.assertFalse(self._game.take(2,0,RED, 0))
+        #taking tile from an empty factory
+        self.assertTrue(self._game.take(2,1,RED, 0))
+        self.assertFalse(self._game.take(1,1,RED, 0))
+        #puting on full patternline
+        self.assertTrue(self._game.take(1, 2, RED, 0))
+        self.assertTrue(self._game.take(2, 3, RED, 0))
+        self.assertEqual(self._game.board(2).floor.state(), 'R')
+        
 
-    def test_game3(self) -> None:
-        self._game.start_game_test([1,2])
-        self._game.take(1, 1 , RED, 1)
-        self._game.take(2, 2 , RED, 1)
-        self.assertEqual(self._game.take(1, 0, STARTING_PLAYER, 1), True)
-        #move: List[Union[Tile, int]] = [2, 0 , BLACK, 0]
-        #self.assertTrue(self._game.take(*move))
+
+
+
 
     def test_entire_game(self)-> None:
         self._game.start_game_test([69, 42])
